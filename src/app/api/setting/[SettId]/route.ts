@@ -1,0 +1,48 @@
+import { NextRequest, NextResponse } from "next/server";
+import Settings from "../../../../../models/Settings";
+import dbConnect from "../../../../../dbConnect";
+
+type SettingType = {
+    _id?:string;
+    webTitle?: string;
+    webTags?: string[];
+    metaData?: string;
+}
+
+interface ISettingParams{
+  SettId?: string;
+}
+
+export async function GET(req:NextRequest, {params} : {params:ISettingParams}){
+
+    try {
+  
+      await dbConnect();
+      const settingData = await Settings.findById(params.SettId);
+      return NextResponse.json({ settingData, success: true }, {status:200});
+  
+    } catch (error) {
+      return new NextResponse("Error while fetching prodData: " + error, {status:500});
+    }
+  }
+  
+export async function PUT(req: NextRequest, {params}:{params:ISettingParams}) {
+  
+try 
+  {
+
+    await dbConnect();
+
+    const { webTitle, webTags, metaData }: SettingType = await req.json();
+    const updateSetting = await Settings.findByIdAndUpdate(params.SettId, { webTitle, webTags, metaData })
+    return NextResponse.json({ updateSetting, success: true }, {status:200});
+
+  } catch (error) {
+    if (error instanceof Error) {
+      // TypeScript now knows 'error' is an Error instance
+      return NextResponse.json({ success: false, message: error.message }, {status:400});
+    } else {
+      return new NextResponse("Error while saving settData: " + error);
+    }
+  }
+}

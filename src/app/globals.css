@@ -18,10 +18,97 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+  background: white(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+.btnLeft{
+  padding: 6px 10px;
+  background-color: #3730a3;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 4px;
+}
+
+.btnLeft:hover{
+  background-color: #4338ca;
+}
+
+.btnLearn{
+  padding: 12px;
+  background-color: #3730a3;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 4px;
+}
+
+.btnLearn:hover{
+  background-color: #4338ca;
+}
+
+.btnRight{
+  padding: 9px 16px;
+  border: 1.5px solid indigo; 
+  background-color: #f9fafb;
+  color: indigo;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 4px;
+}
+.btnRight:hover{
+  background-color: #f3f4f6;
+}
+
+.btnQty{
+  padding: 2px 6px;
+  background-color: white;
+  color: #3730a3;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  font-size: 12px;
+  border-radius: 4px;
+  border: 1.5px solid indigo;
+}
+
+.btnQty:hover{
+  background-color: #F0F3F4;
+}
+
+.btnRemove{
+  padding: 6px 12px;
+  background-color: white;
+  color: #3730a3;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  font-size: 12px;
+  border-radius: 4px;
+  border: 1.5px solid indigo;
+}
+
+.btnRemove:hover{
+  background-color: #F0F3F4;
+}
+
+.inputBox{
+  padding: 10px;
+  border: 1.5px solid indigo;
+  border-radius: 4px;
+ }
+
+.inputBox:focus {
+  outline: 1.5px solid indigo;
 }
