@@ -1,14 +1,12 @@
 import Container from "../Container";
-import BrandLogo from "./BrandLogo";
 import CartIcon from "./CartIcon";
+import BrandLogo from "./BrandLogo";
 import SearchBar from "./SearchBar";
 import UserMenu from "./UserMenu";
+ 
+const NavBar =  () => {
 
-
-const NavBar = async () => {
-
-    // const loggedInUserId = await getUserById();
-    
+     
     return ( 
         <div className='sticky top-0 w-full bg-white z-30 shadow-lg h-auto'>
             <div className="p-4">
@@ -16,9 +14,9 @@ const NavBar = async () => {
                     <div className='flex items-center justify-between'>
                         <BrandLogo/>
                         <SearchBar/>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3" >
                             <CartIcon/>
-                            {/* <UserMenu  loggedInUserId={loggedInUserId}/> */}
+                            <UserMenu  />
                         </div>
                     </div>
                 </Container>

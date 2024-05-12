@@ -1,34 +1,70 @@
 "use client";
+import EmptyCart from "./EmptyCart";
+import { CartItemType } from "../product/ProductDetails";
+import SetQuantity from "@/components/products/SetQuantity";
+import { useState } from "react";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { clearCartItems } from "../../../redux/slices/cartSlice";
 import { truncateText } from "../../../utils/truncateText";
 import Link from "next/link";
 import { removeFromCart } from "../../../redux/slices/cartSlice";
 import toast from "react-hot-toast";
+import { handlePlusCartQty, handleMinusCartQty } from "../../../redux/slices/cartSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Heading from "@/components/Heading";
 import { formatPrice } from "../../../utils/formatPrice";
+import Image from "next/image";
 
 
-interface ShoppingCartProps {
-    
-}
-
-type storeType = {
+type StoreType = {
     store: unknown
     cart:any;
 }
 
-const ShoppingCart:React.FC<ShoppingCartProps> = () => {
+const ShoppingCart = () => {
 
+    const router = useRouter();
     const dispatch = useDispatch();
-    const cartItems = useSelector((store:storeType) => store.cart);
+    const cartItems = useSelector((store:StoreType) => store.cart);
+
+    const loggedInUser = {
+        result:
+        {
+            _id:Cookies.get("loggedInUserId"),
+            usrRole:Cookies.get("loggedInUserRole")
+        }
+    };
+    
+    const handlePlusQty = (product:CartItemType) => {
+        dispatch(handlePlusCartQty(product));
+    }
+
+    const handleMinusQty = (product:CartItemType) => {
+        dispatch(handleMinusCartQty(product));
+    }
+    
 
     const handleRemove = (product:any) => {
         dispatch(removeFromCart(product));
         toast.success('Product removed from cart.');
     }
 
+    const handleClearCart = () => {
+        dispatch(clearCartItems());
+        toast.success("Cleared all items from cart.");
+    }
+
+    if(cartItems.totalItems === 0){
+        return<div>
+            <EmptyCart/>
+        </div>
+    }
+
+    console.log(cartItems);
+
     return ( 
-        <div>
+        <div>     
             <div className="text-center">
                 <Heading title="Shopping Cart" />
             </div>
@@ -40,29 +76,61 @@ const ShoppingCart:React.FC<ShoppingCartProps> = () => {
             </div>
             <div>
                 {
-                    cartItems.items.map((item:any)=>{
+                    cartItems?.items.map((item:any)=>{
                         return(
-                            <div key={item._id} className="grid grid-cols-5 text-xs md:text-sm gap-4 border-t-[1.5px] border-indigo-800 py-4 items-center">
-                                <div className="col-span-2 justify-self-start flex gap-2 md:gap-4" >
+                            <div key={item._id} className="grid grid-cols-5 text-xs md:text-sm gap-2 border-t-[1.5px] border-indigo-800 py-4 items-center">
+                                <div className="col-span-2 justify-self-start flex gap-2" >
                                     <Link href={`/product/${item._id}`}>
-                                        Image
+                                        <Image alt={item.prodName} src={item.prodImage[0]} width={50} height={30}/>
                                     </Link>
-                                    <div className="flex flex-col gap-3">
+                                    <div className="flex flex-col gap-2">
                                         <p>{truncateText(item.prodName)}</p>
-                                        <div className="w-[70px]">
-                                            <button type="button" className="btnRemove" onClick={()=> handleRemove(item)}>
-                                                Remove
-                                            </button>
+                                        <div className="flex gap-1 w-auto">
+                                            <button type="button" className="btnRemove w-[70px]" onClick={()=> handleRemove(item)}>Remove</button>
+                                            {
+                                                 typeof item.prodColor === "string" && item.prodColor  ?   (<div className={`${item.prodColor} w-[70px] rounded-md border-[1.5px] border-black`}></div>)
+                                                :
+                                                (<div className="text-red-700 font-bold text-lg">No color choosen.</div>)
+                                            }
                                         </div>
                                     </div>
+                                </div>
+                                <div className="justify-self-center">
+                                    {formatPrice(item.prodPrice)}
+                                </div>
+                                <div className="justify-self-center">
+                                <SetQuantity 
+                                    cartItem={item}
+                                    handleIncreaseQty={()=> handlePlusQty(item)}
+                                    handleDecreaseQty={()=>handleMinusQty(item)}
+                                />
+                                </div>
+                                <div className="justify-self-end font-semibold">
+                                    {formatPrice(item.prodTotalPrice)}
                                 </div>
                             </div>
                         )
                     })          
                 }
             </div>
+            <div className="border-t-[1.5px] border-indigo-800 py-4 gap-4 mt-6 flex justify-between">
+            <div className="w-[180px]">
+                <button type="button" className="btnLeft" onClick={handleClearCart}>Clear Cart</button>
+            </div>
+            <div className="flex flex-col text-sm gap-1 items-start">
+                <div className="flex gap-3 justify-between w-full text-md font-semibold">
+                    <span>Subtotal:</span>
+                    <span>{formatPrice(cartItems.totalPrice)}</span>
+                </div>
+                <div className="w-full">
+                    <button type="button" className="btnLeft w-full" onClick={()=>{loggedInUser.result._id ? router.push('/checkout'): router.push('/login')}}>
+                            {loggedInUser.result._id ? "Checkout" : "Login to checkout"}
+                    </button>
+                </div>
+            </div>
+            </div>
         </div>
-     );
+     );   
 }
  
 export default ShoppingCart;

@@ -1,12 +1,16 @@
 "use client";
+import { CartItemType } from "@/app/product/ProductDetails";
 import { useState } from "react";
 import Image from "next/image";
 
 interface ProductImageProps {
-    prodById: any;
+    cartItem:CartItemType,
+    prodById: any,
+    handleSelectColor: (col: string) => void;
 }
 
-const ProductImage: React.FC<ProductImageProps> = ({prodById}) => {
+
+const ProductImage: React.FC<ProductImageProps> = ({prodById, cartItem, handleSelectColor}) => {
 
     const imageList:string[] = prodById.prodImage;
     const [selectImage, setSelectImage] = useState<string>(prodById.prodImage?.[0]);
@@ -23,7 +27,7 @@ const ProductImage: React.FC<ProductImageProps> = ({prodById}) => {
                         imageList?.map((img:any, index:number)=>{
                             return(
                                 <div 
-                                    key={index} 
+                                    key={img.prodImage} 
                                     className={`${img === selectImage ? "border-2 border-indigo-800 rounded-md p-3 cursor-pointer" : "border-[1.5px] rounded-md p-3 border-gray-300 cursor-pointer"}`} 
                                     onClick={()=>handleSelectImage(img)}
                                 >

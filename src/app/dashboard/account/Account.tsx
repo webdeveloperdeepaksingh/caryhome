@@ -14,6 +14,8 @@ type AccType = {
     usrEmail: string;
     usrRole:string;
     usrPhone: string;
+    usrAddress:string
+    usrImage:string
 }
 
 interface IAccType{
@@ -64,7 +66,7 @@ const Account:React.FC<AccountProps> = ({accData}) => {
                     usrName: data.usrName, 
                     usrEmail: data.usrEmail, 
                     usrRole: data.usrRole,
-                    usrPhone: data.usrPhone 
+                    usrPhone: data.usrPhone, 
                 }
             ),
         });

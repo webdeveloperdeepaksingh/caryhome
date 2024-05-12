@@ -1,30 +1,51 @@
-import mongoose, { Document, Model } from 'mongoose';
+import mongoose from "mongoose";
+import validator from "validator";
 
-interface AccountProps extends Document {
-    usrName: string;
-    usrEmail: string;
-    usrRole: string;
-    usrPhone: string;
-}
-
-const accountSchema = new mongoose.Schema<AccountProps>({
-    usrName: {
+const accountsSchema = new mongoose.Schema ({        
+    usrName:{
         type: String,
-        required: [true, "Username is required."],
+        unique: false,
     },
-    usrEmail: {
+    usrEmail:{
         type: String,
-        required: [true, "User email is required."],
+        lowercase: true,
+        unique: true, 
+        validate: [validator.isEmail, 'Please enter a valid email.']   
     },
-    usrRole: {
+    usrPass:{
         type: String,
-        default:"User"
+        minlength: [8, 'Password must be at least 8 characters long.'],
+        runValidators: true,
+        unique: false 
+    },
+    confPass:{
+        type: String,
+        minlength: [8, 'Confirm Password must be at least 8 characters long.'],
+        runValidators: true,
+        unique: false
     },
     usrPhone:{
         type: String,
-        required: false
-    }
+        required: false,
+        unique:true
+    },
+    usrRole:{
+        type: String,
+        default:"User"
+    },
+    usrImage:{
+        type:String,
+        required: false,
+        unique:true
+    },
+    usrAddress:{
+        type:String,
+        required: false,
+        unique:true
+    },
+    pwdResetToken: String,
+    pwdResetTokenExpires: Date
 },{timestamps: true});
 
-const Accounts: Model<AccountProps> = mongoose.models.Accounts || mongoose.model<AccountProps>('Accounts', accountSchema);
+const Accounts = mongoose.models.Accounts || mongoose.model("Accounts", accountsSchema);
 export default Accounts;

@@ -88,13 +88,13 @@ body {
 }
 
 .btnRemove{
-  padding: 6px 12px;
+  padding: 4px 6px;
   background-color: white;
   color: #3730a3;
   cursor: pointer;
   text-align: center;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 10px;
   border-radius: 4px;
   border: 1.5px solid indigo;
 }

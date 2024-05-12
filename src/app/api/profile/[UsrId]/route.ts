@@ -3,12 +3,8 @@ import Accounts from "../../../../../models/Accounts";
 import dbConnect from "../../../../../dbConnect";
 
 type reqData = {
-    usrName:string,
-    usrEmail:string,
-    usrImage: string,
-    usrAddress: string,
-    usrRole:string | null,
-    usrPhone: string | null,
+    usrImage:string | null,
+    usrAddress: string | null,
 }
 
 interface IUserParams{
@@ -17,16 +13,16 @@ interface IUserParams{
 
 export async function GET(req:NextRequest, {params}:{params:IUserParams}){
 
-  try 
+    try 
     {
   
       await dbConnect();
-      const accData = await Accounts.findById(params.UsrId);
+      const profileData = await Accounts.findById(params.UsrId);
 
-      if(!accData){
+      if(!profileData){
         return NextResponse.json({ message: "No account found with the given id." }, { status: 404 });
       }
-      return NextResponse.json({ accData, success: true }, {status:200});
+      return NextResponse.json({ profileData, success: true }, {status:200});
   
     } catch (error) {
       return new NextResponse("Error while fetching accData: " + error, {status:500});
@@ -39,18 +35,19 @@ export async function PUT(req: NextRequest, {params}:{params:IUserParams}) {
   {
     await dbConnect();
     
-    const { usrName, usrEmail, usrRole, usrPhone, usrImage, usrAddress }: reqData = await req.json();
-    const accData = await Accounts.findByIdAndUpdate(params.UsrId, {usrName, usrEmail, usrRole, usrPhone, usrImage, usrAddress}, {runValidators:true});
+    const { usrImage, usrAddress }: reqData = await req.json();
+    const profileData = await Accounts.findByIdAndUpdate(params.UsrId, {usrImage, usrAddress}, {runValidators:true});
 
-    if(!accData){
+    if(!profileData){
       return NextResponse.json({ message: "No account found with the given id." }, { status: 404 });
     }
   
-    return NextResponse.json({ accData, success: true }, {status:200});
+    return NextResponse.json({ profileData, success: true }, {status:200});
 
   } catch (error) {
     if (error instanceof Error) {
-       return NextResponse.json({ success: false, message: error.message }, {status:400});
+      // TypeScript now knows 'error' is an Error instance
+      return NextResponse.json({ success: false, message: error.message }, {status:400});
     } else {
       return new NextResponse("Error while updating catData: " + error);
     }

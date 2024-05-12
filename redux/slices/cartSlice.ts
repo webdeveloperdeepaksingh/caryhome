@@ -1,3 +1,4 @@
+import { CartItemType } from "@/app/product/ProductDetails";
 import { createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
@@ -10,19 +11,21 @@ if (typeof window !== 'undefined') {
 const cartSlice = createSlice({
     name: 'cart',
     initialState: {
-        items: initialCartItems, 
-        totalQuantity: initialCartItems.length, 
-        totalPrice: initialCartItems.reduce((acc:any, items:any) => (acc) + (items.prodPrice),0),
+        items: initialCartItems,
+        totalItems: initialCartItems.length,
+        totalPrice: initialCartItems.reduce((acc, item) => acc + item.prodPrice * item.prodQty, 0),
       }, 
 
     reducers:{
-        addToCart:(state, action) =>{
-            const {_id, prodName, prodSlug, prodTags, prodCat, prodDesc, prodPrice, prodBrand, prodReviews, prodColor, inStock, prodImage } = action.payload;
-            const existingProduct = state.items.find((item:any) => item._id === _id);
+        addToCart:(state, action, )  =>{
+            const {prodId, prodName, prodCat,  prodPrice, prodBrand, prodColor, inStock, prodImage, prodQty } = action.payload;
+            const existingProduct = state.items.find((item:any) => item._id === prodId);
+            
              if (!existingProduct) {
-                    state.items.push({_id, prodName, prodSlug, prodTags, prodCat, prodDesc, prodPrice, prodBrand, prodReviews, prodColor, inStock, prodImage });
-                    toast.success('Product added to cart.');
-                    state.totalQuantity++;
+                    let prodTotalPrice=prodPrice*prodQty;
+                    state.items.push({prodId, prodName, prodCat, prodPrice, prodBrand, prodColor, prodQty, inStock, prodImage, prodTotalPrice });
+                    toast.success('Product added to cart.');                    
+                    state.totalItems++;
                     state.totalPrice += prodPrice;
                     if (typeof window !== 'undefined') {
                     localStorage.setItem("cartItems", JSON.stringify(state.items));
@@ -31,44 +34,58 @@ const cartSlice = createSlice({
                 toast.error('Product already in cart!');
             }         
         },
-        increaseProdQty: (state, action) => {
-            const productId = action.payload._id;
-            const existingProduct = state.items.find((item: any) => item._id === productId);
-            if (existingProduct) {
-                existingProduct.quantity++; // Assuming you have a 'quantity' property for each product
-                state.totalQuantity++;
-                state.totalPrice += existingProduct.prodPrice;
-                if (typeof window !== 'undefined') {
-                    localStorage.setItem('cartItems', JSON.stringify(state.items));
-                }
+        handlePlusCartQty:(state, action) => {
+            var {prodId, prodPrice, prodQty } = action.payload;
+            if(prodQty >19){
+                toast.error("Oops! Reached max limit.");
+            }else{
+                let cartItems: CartItemType[] = JSON.parse(localStorage.getItem("cartItems") || "[]");
+                if(cartItems){
+                    let product = cartItems.filter((item:any)=> item.prodId === prodId);
+                    product[0].prodQty = product[0].prodQty + 1;
+                    product[0].prodTotalPrice = product[0].prodQty*prodPrice;
+                    cartItems[cartItems.indexOf(product[0])]=product[0];
+                    state.items=cartItems;
+                    state.totalPrice += prodPrice;
+                    localStorage.setItem("cartItems", JSON.stringify(state.items));
+                }        
             }
         },
-        decreaseProdQty: (state, action) => {
-            const productId = action.payload._id;
-            const existingProduct = state.items.find((item: any) => item._id === productId);
-            if (existingProduct && existingProduct.quantity > 1) {
-                existingProduct.quantity--; // Assuming you have a 'quantity' property for each product
-                state.totalQuantity--;
-                state.totalPrice -= existingProduct.prodPrice;
-                if (typeof window !== 'undefined') {
-                    localStorage.setItem('cartItems', JSON.stringify(state.items));
-                }
-            }
+        handleMinusCartQty:(state, action) => {
+            var {prodId, prodPrice,  prodQty } = action.payload;
+            if(prodQty < 2){
+                toast.error("Oops! Reached min limit.");
+            }else{
+                let cartItems: CartItemType[] = JSON.parse(localStorage.getItem("cartItems") || "[]");
+                if(cartItems){
+                    let product = cartItems.filter((item:any)=> item.prodId === prodId);
+                    product[0].prodQty = product[0].prodQty - 1;
+                    product[0].prodTotalPrice = product[0].prodQty*prodPrice;
+                    cartItems[cartItems.indexOf(product[0])] = product[0];
+                    state.items=cartItems;         
+                    state.totalPrice -= prodPrice;           
+                    localStorage.setItem("cartItems", JSON.stringify(state.items));
+                } 
+            }                 
         },
         removeFromCart:(state, action) =>{
-            const productId = action.payload._id;
-            const index = state.items.findIndex((item:any) => item._id === productId);
-            state.totalQuantity--;
-            state.totalPrice -= state.items[index].prodPrice;
-            state.items = state.items.filter((item:any) => item._id !== productId);
+            const productId = action.payload.prodId;
+            const product = state.items.filter((item:any) => item.prodId === productId);            
+            state.totalItems -= product[0].prodQty;
+            state.totalPrice -= product[0].prodTotalPrice;
+            state.items = state.items.filter((item:any) => item.prodId !== productId);
             
              if (typeof window !== 'undefined') {
                  localStorage.setItem("cartItems", JSON.stringify(state.items));
              }
         },
-        clearLocalStorage: (state) => {
+        handleSetPaymentIntent:(state, action) => {
+            
+        },
+    
+        clearCartItems: (state) => {
             state.items = [];
-            state.totalQuantity = 0;
+            state.totalItems = 0;
             state.totalPrice = 0;
             if (typeof window !== 'undefined') {
              localStorage.removeItem("cartItems");
@@ -77,5 +94,5 @@ const cartSlice = createSlice({
     }
 });
 
-export const {addToCart,increaseProdQty, decreaseProdQty, removeFromCart, clearLocalStorage} = cartSlice.actions;
+export const {addToCart, handlePlusCartQty, handleMinusCartQty, removeFromCart, handleSetPaymentIntent, clearCartItems} = cartSlice.actions;
 export default cartSlice.reducer;

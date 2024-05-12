@@ -47,7 +47,7 @@ const SettingPage:React.FC<SettingPageProps> = ({settData}) => {
         if (post.success === false) {
             toast.error('Error saving data.');
         } else {
-            toast.success('Settings saved successfully!');     
+            toast.success('Data saved successfully!');     
          }
     } catch (error) {
         console.error("Error saving settData: ", error);
