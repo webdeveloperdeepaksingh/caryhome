@@ -78,7 +78,7 @@ const SignUp  = () => {
         if(post.success === false){      
             toast.error(`${post.msg}`);      
         }else{
-            toast.success('Registered successfully.');
+            toast.success(`${post.msg}`);
             router.push('/login');
           }
       }catch(error){

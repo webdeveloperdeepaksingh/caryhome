@@ -19,6 +19,7 @@ export const getCatData = async () => {
 const Categories = async () => {
      
     const catData = await getCatData();
+    
     return ( 
         <div className="w-full">
             <CategoryList catData={catData.catList}/>

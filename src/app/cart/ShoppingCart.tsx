@@ -1,7 +1,7 @@
 "use client";
 import EmptyCart from "./EmptyCart";
 import { CartItemType } from "../product/ProductDetails";
-import SetQuantity from "@/components/products/SetQuantity";
+import SetQuantity from "@/components/SetQuantity";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";

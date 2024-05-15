@@ -1,19 +1,15 @@
 import Categories from "../../../../models/Categories"; 
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "../../../../dbConnect";
+import { CatType } from "@/components/categories/CategoryItems";
  
-type reqData = {
-  _id?:string,
-  catName:string,
-  catImage:string | null
-}
 
 export async function GET(req:NextRequest){
 
   try {
 
     await dbConnect();
-    var catList:reqData[] = await Categories.find();
+    const catList:CatType[] = await Categories.find();
     return NextResponse.json({ catList, success: true }, {status:200});
 
   } catch (error) {
@@ -26,19 +22,19 @@ export async function POST(req: NextRequest) {
   try {
 
     await dbConnect();
-    const { catName, catImage }: reqData = await req.json();
+    const { catName, catImage }: CatType = await req.json();
 
     const newCategory = new Categories({ catName, catImage });
     const savedCategory = await newCategory.save();
 
     return NextResponse.json({ savedCategory, success: true }, {status:200});
 
-  } catch (error) {
-    if (error instanceof Error) {
-      // TypeScript now knows 'error' is an Error instance
-      return NextResponse.json({ success: false, message: error.message }, {status:400});
-    } else {
-      return new NextResponse("Error while saving data: " + error);
+  } catch (error:any) {
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map((val:any) => val.message);
+      return NextResponse.json({ success: false, msg: messages }, {status:400});
+    }else{
+      return new NextResponse ("Error while saving data: " + error, {status: 400});
     }
   }
 }

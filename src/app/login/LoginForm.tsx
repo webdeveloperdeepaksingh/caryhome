@@ -55,10 +55,8 @@ const LoginForm  = () => {
             'Content-Type':'application/json'
           },
           body:JSON.stringify({usrName: user.usrName, usrPass:user.usrPass}),
-        });
-    
-        const post = await result.json();
-         
+        });    
+        const post = await result.json();        
         if(post.success === false){   
             toast.error("Invalid username or password!");    
           }else{  
@@ -91,12 +89,19 @@ const LoginForm  = () => {
                 <button type="submit" className="btnLeft w-full" >
                     Login
                 </button>
-                <p className="text-sm">
-                    Dont have an account? 
-                    <Link href="/register" className="underline ml-2">
-                        Register
-                    </Link>
-                </p>
+                <div className="flex flex-col items-center">
+                  <div className="flex gap-2 items-center">
+                      <p className="text-sm">Dont have an account?</p> 
+                      <Link href="/register" className="text-sm">
+                          Register
+                      </Link>
+                  </div>
+                  <div className="text-sm"> 
+                      <Link href="/forgot-password">
+                          Forgot password?
+                      </Link>
+                  </div>
+                </div>
             </form>
         </div>
      );

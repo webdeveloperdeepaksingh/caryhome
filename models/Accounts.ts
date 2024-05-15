@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
-import validator from "validator";
+import bcrypt from "bcryptjs";
+
+const validateEmail:any = (email:any) => {
+    const re = /^[\w.-]+@[\w-]+(\.[\w-]{2,3})+$/;
+    return re.test(email);
+};
 
 const accountsSchema = new mongoose.Schema ({        
     usrName:{
@@ -8,26 +13,29 @@ const accountsSchema = new mongoose.Schema ({
     },
     usrEmail:{
         type: String,
+        trim: true,
         lowercase: true,
-        unique: true, 
-        validate: [validator.isEmail, 'Please enter a valid email.']   
+        unique: true,
+        validate: [validateEmail, 'Please enter a valid email address'],
+        match: [/^[\w.-]+@[\w-]+(\.[\w-]{2,3})+$/, 'Please enter a valid email address']  
     },
     usrPass:{
         type: String,
-        minlength: [8, 'Password must be at least 8 characters long.'],
-        runValidators: true,
-        unique: false 
+        minLength: [8, 'Password must be at least 8 characters long.'],
+        unique: false,
+        runValidators: true
     },
     confPass:{
         type: String,
-        minlength: [8, 'Confirm Password must be at least 8 characters long.'],
-        runValidators: true,
-        unique: false
+        minLength: [8, 'Confirm Password must be at least 8 characters long.'],
+        unique: false,
+        runValidators:true
     },
     usrPhone:{
         type: String,
         required: false,
-        unique:true
+        unique:true,
+        sparse: true
     },
     usrRole:{
         type: String,
@@ -36,16 +44,25 @@ const accountsSchema = new mongoose.Schema ({
     usrImage:{
         type:String,
         required: false,
-        unique:true
+        unique:true,
+        sparse:true
     },
     usrAddress:{
         type:String,
         required: false,
-        unique:true
     },
     pwdResetToken: String,
     pwdResetTokenExpires: Date
 },{timestamps: true});
+
+accountsSchema.pre('save', async function(next){    
+    if(this.isModified('usrPass')){
+        const password = this.usrPass as string;
+        this.usrPass = await bcrypt.hash(password, 12);
+     }
+    this.confPass = undefined; //stopping confPass to be saved in db.
+    next();
+});
 
 const Accounts = mongoose.models.Accounts || mongoose.model("Accounts", accountsSchema);
 export default Accounts;

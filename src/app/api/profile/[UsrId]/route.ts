@@ -44,12 +44,12 @@ export async function PUT(req: NextRequest, {params}:{params:IUserParams}) {
   
     return NextResponse.json({ profileData, success: true }, {status:200});
 
-  } catch (error) {
-    if (error instanceof Error) {
-      // TypeScript now knows 'error' is an Error instance
-      return NextResponse.json({ success: false, message: error.message }, {status:400});
-    } else {
-      return new NextResponse("Error while updating catData: " + error);
+  } catch (error:any) {
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map((val:any) => val.message);
+      return NextResponse.json({ success: false, msg: messages }, {status:400});
+    }else{
+      return new NextResponse ("Error while saving data: " + error, {status: 400});
     }
   }
 }

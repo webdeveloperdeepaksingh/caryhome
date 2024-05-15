@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import { truncateText } from "../../../utils/truncateText";
-import { formatPrice } from "../../../utils/formatPrice";
+import { truncateText } from "../../utils/truncateText";
+import { formatPrice } from "../../utils/formatPrice";
 import { ProdType } from "@/app/dashboard/update-product/UpdateProduct";
 import { useRouter } from "next/navigation";
 import { Rating } from "@mui/material";
@@ -17,7 +17,7 @@ const ProductCard :React.FC<ProductCardProps> = ({data}) => {
     return ( 
         <div className="flex gap-4 ">
             {
-                data.map((item:any)=>{
+                data?.map((item:any)=>{
                     return(
                         <div key={item._id} className="max-w-[300px] h-auto p-6 shadow-lg rounded-md hover:scale-110 duration-500 ease-in-out">
                             <div className="flex flex-col items-center">

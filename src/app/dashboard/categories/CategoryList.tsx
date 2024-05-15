@@ -1,5 +1,6 @@
 "use client";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import Image from "next/image";
 import { FaEdit } from "react-icons/fa";
 import Link from "next/link";
 
@@ -39,10 +40,12 @@ const CategoryList:React.FC<CategoryListProps> = ({catData}) => {
                 </thead>
                 <tbody className='divide-y'>
                 {
-                    catData?.map((item)=> {
+                    catData?.map((item:any)=> {
                     return(
                     <tr className='hover:bg-gray-100' key={item._id}>
-                        <td className='py-2 px-4'>{item.catImage}</td>
+                        <td className='py-2 px-4'>
+                            <Image alt="img" src={item.catImage ? item.catImage : ''} width={26} height={20}/>
+                        </td>
                         <td className='py-2 px-4'>{item.catName}</td>
                         <td className='flex py-2 text-lg gap-6  px-4'>
                             <Link href={`/dashboard/update-category/${item._id}`}><FaEdit /></Link>

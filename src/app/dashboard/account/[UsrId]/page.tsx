@@ -6,7 +6,7 @@ interface IAccountParams {
     UsrId?: string;
 }
 
-export const getAdminAccount = async (id: IAccountParams) => {
+export const getAccount = async (id: IAccountParams) => {
 
     try 
     {
@@ -25,7 +25,7 @@ export const getAdminAccount = async (id: IAccountParams) => {
 
 const MainAdminAccount = async ({params}:{params:IAccountParams}) => {
 
-    const accData = await getAdminAccount(params);
+    const accData = await getAccount(params);
 
     return ( 
         <div>

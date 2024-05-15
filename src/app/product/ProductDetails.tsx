@@ -1,6 +1,6 @@
 "use client";
 import toast from "react-hot-toast";
-import SetQuantity from "@/components/products/SetQuantity";
+import SetQuantity from "@/components/SetQuantity";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/slices/cartSlice";
 import Container from "@/components/Container";
@@ -8,7 +8,7 @@ import { Rating } from "@mui/material";
 import ProductImage from "../../components/ProductImage";
 import { useState, useCallback } from "react";
 import { formatPrice } from "../../../utils/formatPrice";
-import SetColor from "@/components/products/SetColor";
+import SetColor from "@/components/SetColor";
  
 interface ProductDetailsProps {
     prodById:any;

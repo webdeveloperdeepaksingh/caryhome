@@ -21,7 +21,7 @@ const CreateCategory: React.FC = () => {
         const { name, value } = e.target;
         setData((prevData) => ({ ...prevData, [name]: value }));
         console.log(data);
-    };
+    };   
     
     const handleSubmit = async (e:FormEvent<HTMLFormElement>):Promise<void> => {
     e.preventDefault();
@@ -67,14 +67,10 @@ const CreateCategory: React.FC = () => {
 
     return ( 
         <div>
-            <form className="flex flex-col max-w-[450px] shadow-lg rounded-md h-auto p-9 mx-auto border-[1.5px] border-indigo-800" onSubmit={handleSubmit}>
+            <form className="flex flex-col max-w-[500px] shadow-lg rounded-md h-auto p-9 mx-auto border-[1.5px] border-indigo-800" onSubmit={handleSubmit}>
                 <div className="flex flex-col mb-3 gap-2">
                     <label className="font-semibold">Category Name:</label>
                     <input type="text" className="inputBox" name="catName" value={data.catName} onChange={handleChange} placeholder="Category name"></input>
-                </div>
-                <div className="flex flex-col mb-3 gap-2">
-                    <label className="font-semibold">Image:</label>
-                    <input type="file" className="inputBox" name="catImage"  placeholder="Choose image."></input>
                 </div>
                 {errorMessage && <p className='text-red-600 italic '>{errorMessage}</p>}
                 <div className="mt-3">

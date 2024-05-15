@@ -42,8 +42,7 @@ const UserProfile :React.FC<UserProfileProps> = ({proData}) => {
     e.preventDefault();
     
     const formData = new FormData();
-console.log('image'+image);
-    if (!image) {
+     if (!image) {
         alert('No image selected.');
     }else if (!image.type.startsWith('image/')) {
         alert('Only image files (JPEG, JPG, PNG ) are allowed.');
@@ -120,7 +119,7 @@ console.log('image'+image);
                             <div className="flex flex-col gap-2">
                                 <label className="font-semibold">Image:</label>
                                 <div className="flex gap-1">
-                                    <input type="file" name="usrImage" accept='image/*' value={data.usrImage} onChange={(e)=>handleChangeImage(e.target.files)} className="inputBox w-full" ></input>
+                                    <input type="file" name="usrImage" accept='image/*'  onChange={(e)=>handleChangeImage(e.target.files)} className="inputBox w-full" ></input>
                                     <button type="button" onClick={handleImageUpload} className="btnRight">Upload</button>
                                 </div>
                             </div>

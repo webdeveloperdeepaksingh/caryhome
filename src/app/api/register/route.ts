@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "../../../../dbConnect";
 import Accounts from "../../../../models/Accounts";
-import bcrypt from "bcryptjs";
+
 
 export const POST = async (request: NextRequest) => {
 
@@ -21,17 +21,16 @@ export const POST = async (request: NextRequest) => {
       return NextResponse.json({ success: false,  msg: "User already exists." }, { status: 400 });
     }
     
-    const password_hash = await bcrypt.hash(usrPass, 12);
-    const newAccount = new Accounts({usrName, usrEmail, usrPass: password_hash});
-
+    const newAccount = new Accounts({usrName, usrEmail, usrPass});
     await newAccount.save();
     return NextResponse.json({ msg: "Registered Successfully." },{ status: 200 });
 
-  } catch (error) {
-    if (error instanceof Error) {
-        return NextResponse.json({ success: false, message: error.message }, {status:400});
-    } else {
-        return new NextResponse("Error while saving accData: " + error);
+  } catch (error:any) {
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map((val:any) => val.message);
+      return NextResponse.json({ success: false, msg: messages }, {status:400});
+    }else{
+      return new NextResponse ("Error while saving data: " + error, {status: 400});
     }
   }
 };
