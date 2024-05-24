@@ -1,11 +1,12 @@
 "use client";
-import NavBar from '@/components/nav/NavBar'
+import NavBar from '@/components/nav/navitems/NavBar'
 import { usePathname } from 'next/navigation';
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import Footer from '@/components/footer/Footer'
 import Providers from '../../redux/providers'
+import Script from 'next/script';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -33,6 +34,7 @@ export default  function RootLayout({children,}: {children: React.ReactNode}) {
           {pathName.startsWith("/dashboard") ? null : <Footer/>} 
         </body>
       </html>
+      <Script src="https://checkout.razorpay.com/v1/checkout.js"/>
      </Providers>
     </>
   );

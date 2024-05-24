@@ -21,15 +21,16 @@ const cartSlice = createSlice({
             const {prodId, prodName, prodCat,  prodPrice, prodBrand, prodColor, inStock, prodImage, prodQty } = action.payload;
             const existingProduct = state.items.find((item:any) => item._id === prodId);
             
-             if (!existingProduct) {
-                    let prodTotalPrice=prodPrice*prodQty;
-                    state.items.push({prodId, prodName, prodCat, prodPrice, prodBrand, prodColor, prodQty, inStock, prodImage, prodTotalPrice });
-                    toast.success('Product added to cart.');                    
-                    state.totalItems++;
-                    state.totalPrice += prodPrice;
-                    if (typeof window !== 'undefined') {
-                    localStorage.setItem("cartItems", JSON.stringify(state.items));
-                }  
+            if (!existingProduct) {
+                let prodTotalPrice=prodPrice*prodQty;
+                state.items.push({prodId, prodName, prodCat, prodPrice, prodBrand, prodColor, prodQty, inStock, prodImage, prodTotalPrice });
+                toast.success('Product added to cart.');                    
+                state.totalItems++;
+                state.totalPrice += prodPrice;
+                localStorage.setItem("cartItems", JSON.stringify(state.items));
+                // if (typeof window !== 'undefined') {
+                    
+                // }  
             }else{
                 toast.error('Product already in cart!');
             }         
@@ -74,25 +75,22 @@ const cartSlice = createSlice({
             state.totalItems -= product[0].prodQty;
             state.totalPrice -= product[0].prodTotalPrice;
             state.items = state.items.filter((item:any) => item.prodId !== productId);
-            
-             if (typeof window !== 'undefined') {
-                 localStorage.setItem("cartItems", JSON.stringify(state.items));
-             }
+            localStorage.setItem("cartItems", JSON.stringify(state.items));
+            //  if (typeof window !== 'undefined') {
+                 
+            //  }
         },
-        handleSetPaymentIntent:(state, action) => {
-            
-        },
-    
         clearCartItems: (state) => {
             state.items = [];
             state.totalItems = 0;
             state.totalPrice = 0;
-            if (typeof window !== 'undefined') {
-             localStorage.removeItem("cartItems");
-            }
+            localStorage.removeItem("cartItems");
+            // if (typeof window !== 'undefined') {
+             
+            // }
         },
     }
 });
 
-export const {addToCart, handlePlusCartQty, handleMinusCartQty, removeFromCart, handleSetPaymentIntent, clearCartItems} = cartSlice.actions;
+export const {addToCart, handlePlusCartQty, handleMinusCartQty, removeFromCart, clearCartItems} = cartSlice.actions;
 export default cartSlice.reducer;

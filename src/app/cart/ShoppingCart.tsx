@@ -35,6 +35,10 @@ const ShoppingCart = () => {
             usrRole:Cookies.get("loggedInUserRole")
         }
     };
+
+    const subTotal : number = cartItems.totalPrice;
+    const tax : number= .06 * subTotal;
+    const shippingCharge : number= 370;
     
     const handlePlusQty = (product:CartItemType) => {
         dispatch(handlePlusCartQty(product));
@@ -117,13 +121,25 @@ const ShoppingCart = () => {
             <div className="w-[180px]">
                 <button type="button" className="btnLeft" onClick={handleClearCart}>Clear Cart</button>
             </div>
-            <div className="flex flex-col text-sm gap-1 items-start">
+            <div className="flex flex-col text-sm gap-1 items-start p-6 bg-gray-100 rounded-md">
                 <div className="flex gap-3 justify-between w-full text-md font-semibold">
                     <span>Subtotal:</span>
-                    <span>{formatPrice(cartItems.totalPrice)}</span>
+                    <span>{formatPrice(subTotal)}</span>
+                </div>
+                <div className="flex gap-3 justify-between w-full text-md">
+                    <span>Tax: 6%</span>
+                    <span>{formatPrice(tax)}</span>
+                </div>
+                <div className="flex gap-3 justify-between w-full text-md">
+                    <span>Shipping:</span>
+                    <span>{formatPrice(370)}</span>
+                </div>
+                <div className="flex gap-3 justify-between w-full text-md">
+                    <span>Total:</span>
+                    <span>{formatPrice(subTotal+tax+shippingCharge)}</span>
                 </div>
                 <div className="w-full">
-                    <button type="button" className="btnLeft w-full" onClick={()=>{loggedInUser.result._id ? router.push('/checkout'): router.push('/login')}}>
+                    <button type="button" className="btnLeft w-full" onClick={()=>{loggedInUser.result._id ? router.push(`/checkout/${loggedInUser.result._id}`): router.push('/login?navigate=checkout')}}>
                             {loggedInUser.result._id ? "Checkout" : "Login to checkout"}
                     </button>
                 </div>

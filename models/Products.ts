@@ -17,6 +17,7 @@ interface ProductProps extends Document {
 
 const prodReviewsSchema = new mongoose.Schema({
     userId: String,
+    usrName: String,
     rating: Number,
     comment: String,
 },{timestamps:true});

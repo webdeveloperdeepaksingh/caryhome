@@ -12,8 +12,9 @@ type LoginType = {
     usrPass: string;
 }
 
-const LoginForm  = () => {
-
+const LoginForm  = () => { 
+    const urlSearchParams = new URLSearchParams(window.location.search);    
+    const navigate = urlSearchParams.get('navigate');
     const router = useRouter();
     const [errorMessage, setErrorMessage] = useState('');
     const [user, setUser] = useState<LoginType>({usrName:'', usrPass:''});
@@ -63,8 +64,14 @@ const LoginForm  = () => {
             Cookies.set("loggedInUserId", post.result.id); 
             Cookies.set("loggedInUserRole", post.result.role);
             Cookies.set("token", post.result.userToken);
-            toast.success("Logged in successfully.");     
-            router.push('/dashboard/home');
+            
+            if(navigate && navigate==="checkout"){
+              router.push('/cart');  
+            }
+            else{
+              toast.success("Logged in successfully."); 
+              router.push('/dashboard/home');
+            }            
           }
       }catch(error){
           console.log(error);    
@@ -72,8 +79,8 @@ const LoginForm  = () => {
       }
   
     return ( 
-        <div>
-            <form className="flex flex-col w-[450px] p-9 gap-3 border-[1.5px] border-indigo-800 shadow-lg rounded-md" onSubmit={handleSubmit}>
+        <div className="p-6 md:p-0">
+            <form className="flex flex-col max-w-[450px] p-9 gap-3 border-[1.5px] border-indigo-800 shadow-lg rounded-md" onSubmit={handleSubmit}>
                 <div className="flex flex-col">
                     <label htmlFor="usrName" className="text-sm mb-2">Username or Email:*</label>
                     <input type="text" className="inputBox" name="usrName" value={user.usrName} onChange={handleChange} placeholder="coachdeepak@gmail.com"></input>

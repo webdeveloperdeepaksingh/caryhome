@@ -73,7 +73,7 @@ export async function PUT(req: NextRequest, {params}:{params:IUserParams}) {
       const messages = Object.values(error.errors).map((val:any) => val.message);
       return NextResponse.json({ success: false, msg: messages }, {status:400});
     }else{
-      return new NextResponse ("Error while saving data: " + error, {status: 400});
+      return new NextResponse ("Error while updating data: " + error, {status: 400});
     }
   }
 }

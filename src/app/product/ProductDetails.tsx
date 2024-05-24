@@ -6,7 +6,7 @@ import { addToCart } from "../../../redux/slices/cartSlice";
 import Container from "@/components/Container";
 import { Rating } from "@mui/material";
 import ProductImage from "../../components/ProductImage";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { formatPrice } from "../../../utils/formatPrice";
 import SetColor from "@/components/SetColor";
  
@@ -59,6 +59,10 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({prodById}) => {
         })
     },[cartItem.prodColor]) 
 
+    useEffect(()=>{
+        handleSelectColor(prodById.prodColor[0])
+    },[]) ;
+
 
     const handleIncreaseQty = useCallback(()=> {
         if(cartItem.prodQty > 19){
@@ -85,7 +89,7 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({prodById}) => {
     return ( 
         <div>
            <Container>
-                <div className="grid grid-cols-2 h-auto mt-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 h-auto mt-8 p-6 md:p-0">
                     <div className="">
                         <ProductImage prodById={prodById} cartItem={cartItem} handleSelectColor={handleSelectColor}/>
                     </div>

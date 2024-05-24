@@ -56,15 +56,15 @@ const CategoryItems:React.FC<CategoryItemsProps>  =  ({catItems}) => {
     return ( 
         <div>
             <Container>
-                <div className="flex flex-col">
+                <div className="flex flex-col p-6 md:p-0">
                     <div className="grid grid-cols-3  md:grid-cols-5 lg:grid-cols-10 py-4 gap-6  border-t-[1.5px] mt-4">
                         {
                             catItems?.map((item:any, index)=>{
                                 return (
-                                    <div key={item.catName} onClick={()=>handleCategoryItems(item.catName)} className={`w-[100px] h-auto py-3 shadow-lg rounded-md cursor-pointer ${item.catName === query ? "bg-white border-[1.5px] border-black" : "bg-indigo-800"}`}>
+                                    <div key={item.catName} onClick={()=>handleCategoryItems(item.catName)} className={`max-w-[100px] h-auto py-3 shadow-lg rounded-md cursor-pointer ${item.catName === query ? "bg-white border-[1.5px] border-black" : "bg-indigo-800"}`}>
                                         <div className="flex flex-col items-center justify-center gap-2">
                                             <div>
-                                                <Image alt={""}  src={item.catImage ? item.catImage : ''} width={26} height={20} />
+                                                <Image alt={""} className="rounded-md"  src={item.catImage ? item.catImage : ''} width={26} height={20} />
                                             </div>
                                             <div >
                                                 <p className={item.catName === query ? "text-black" : "text-white"}>{item.catName}</p>

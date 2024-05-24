@@ -16,21 +16,15 @@ type CatType = {
 
 const CategoryList:React.FC<CategoryListProps> = ({catData}) => {
 
-    const handleSearch = (value: any) => {
-
-    }
     
     return ( 
-        <div className="flex flex-col w-full shadow-lg rounded-lg">
-            <div className='flex items-center justify-between mb-2'>
-                <div className='border border-solid rounded-sm shadow-md'>
-                    <input type='search' onKeyUp={(e)=> handleSearch(e.target.value)} className='py-2 px-3 max-w-[400px] focus:outline-indigo-800' placeholder='Search category name...'></input>
-                </div>
+        <div className="flex flex-col w-full  rounded-lg">
+            <div className='flex mb-4 justify-end'>               
                 <div>
-                    <Link href='/dashboard/create-category' className='py-3 px-3 rounded-sm bg-indigo-800 hover:bg-indigo-600 text-white font-bold'>CREATE</Link>
-                </div>
+                    <Link href='/dashboard/create-category' className='py-3 px-2 rounded-sm bg-indigo-800 hover:bg-indigo-600 text-white font-bold'>CREATE</Link>  
+                </div>             
             </div>
-            <table className="table-auto w-full text-left">
+            <table className="table-auto w-full text-left shadow-lg">
                 <thead className='font-bold bg-gray-200'>
                     <tr>
                         <th className='p-4'>CATEGORY ICON</th>

@@ -1,6 +1,6 @@
 "use client";
-import { BASE_API_URL } from "../../../utils/constant";
-import { productByQuery } from "../../../redux/slices/searchSlice";
+import { BASE_API_URL } from "../../../../utils/constant";
+import { productByQuery } from "../../../../redux/slices/searchSlice";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 

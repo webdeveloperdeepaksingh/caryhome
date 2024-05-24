@@ -108,7 +108,7 @@ const Account:React.FC<AccountProps> = ({accData}) => {
                         </div>
                         <div className="flex flex-col gap-2">
                             <label className="font-semibold">User Role:*</label>
-                            <input type="text" name="usrRole" value={data.usrRole} onChange={handleChange} className="inputBox" ></input>
+                            <input type="text" disabled name="usrRole" value={data.usrRole} onChange={handleChange} className="inputBox" ></input>
                         </div>
                     </div>
                     <div className="flex flex-col mb-3 gap-2">

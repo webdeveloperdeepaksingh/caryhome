@@ -4,6 +4,7 @@ import { BASE_API_URL } from "../../../../utils/constant";
 import { FaEdit } from "react-icons/fa";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { formatPrice } from "../../../../utils/formatPrice";
 
 interface ProductListProps {
     prodData: ProductType[] | null;
@@ -89,7 +90,7 @@ const ProductList:React.FC<ProductListProps> = ({prodData}) => {
                             <tr className='hover:bg-gray-100' key={item._id}>
                             <td className='py-2 px-4'>{item.prodName}</td>
                             <td className='py-2 px-4'>{item.prodCat}</td>
-                            <td className='py-2 px-4'>{item.prodPrice}</td>
+                            <td className='py-2 px-4'>{formatPrice(item.prodPrice)}</td>
                             <td className='flex py-2 text-lg gap-6 px-4'>
                                 <Link href={`/dashboard/update-product/${item._id}`}>
                                 <FaEdit />
@@ -104,7 +105,7 @@ const ProductList:React.FC<ProductListProps> = ({prodData}) => {
                             <tr className='hover:bg-gray-100' key={item._id}>
                             <td className='py-2 px-4'>{item.prodName}</td>
                             <td className='py-2 px-4'>{item.prodCat}</td>
-                            <td className='py-2 px-4'>{item.prodPrice}</td>
+                            <td className='py-2 px-4'>{formatPrice(item.prodPrice)}</td>
                             <td className='flex py-2 text-lg gap-6 px-4'>
                                 <Link href={`/dashboard/update-product/${item._id}`}>
                                 <FaEdit />

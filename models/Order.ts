@@ -12,15 +12,11 @@ const prodSchema = new mongoose.Schema({
 },{timestamps:true});
 
 const orderSchema = new mongoose.Schema({
-    usrName: {
-        type: String,
-        required: true,
-    },
     usrId: {
         type: String,
         required: true,
     },
-    usrProduct: [prodSchema],
+    usrProducts: [prodSchema],
     paymentStatus: {
         type: String
     },
@@ -30,12 +26,18 @@ const orderSchema = new mongoose.Schema({
     orderStatus:{
         type:String
     },
-    paymentId:{
-        type: String
+    razorpay_order_id: {
+        type: String,
+        required: true,
     },
-    orderId:{
-        type:String
+    razorpay_payment_id: {
+        type: String,
+        required: true,
     },
+    razorpay_signature: {
+        type: String,
+        required: true,
+    }, 
     orderAmount:{
         type:String
     }

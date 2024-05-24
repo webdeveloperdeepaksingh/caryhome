@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { FormEvent, useState } from "react";
 import { Checkbox } from "@mui/material";
 import toast from "react-hot-toast";
@@ -26,6 +27,7 @@ export type ProdType = {
     prodBrand: string;
     prodReviews: string[] | null;
     inStock:boolean;
+    prodColor:string[]
     prodImage?: string[] | null;
 }
 
@@ -33,6 +35,7 @@ const UpdateProduct:React.FC<UpdateProductProps> =  ({categoryList, prodById}) =
 
     console.log(prodById);
     const router = useRouter();
+    const [color, setColor] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [data, setData] = useState(
@@ -45,6 +48,7 @@ const UpdateProduct:React.FC<UpdateProductProps> =  ({categoryList, prodById}) =
             inStock: prodById.inStock,
             prodPrice: prodById.prodPrice,
             prodDesc: prodById.prodDesc,
+            prodColor:prodById.prodColor,
             prodImage: prodById.prodImage
         }
     );
@@ -55,6 +59,14 @@ const UpdateProduct:React.FC<UpdateProductProps> =  ({categoryList, prodById}) =
         console.log(data);
     };
 
+    const handleSetColor = (data:string) => {
+        if(color.includes(data)){
+            setColor(color.filter((clr:any) => clr != data));
+        }
+        else{
+            setColor([...color, data]);
+        }        
+    }
 
     const handleSubmit = async (e:FormEvent<HTMLFormElement>):Promise<void> => {
         e.preventDefault();
@@ -95,6 +107,7 @@ const UpdateProduct:React.FC<UpdateProductProps> =  ({categoryList, prodById}) =
                     inStock:data.inStock,
                     prodPrice:data.prodPrice,
                     prodDesc:data.prodDesc,
+                    prodColor:color,
                     prodImage:data.prodImage 
                 }
             ),
@@ -119,6 +132,39 @@ const UpdateProduct:React.FC<UpdateProductProps> =  ({categoryList, prodById}) =
             setIsLoading(false);
           }
         };  
+
+        const handleRemoveImage = async (imageUrl:any) => {   
+            if(imageUrl){
+                    const parts = imageUrl.split('/'); // Split the URL by slashes ('/')
+                    const filename = parts.pop();  //and get the last part
+                try 
+                {
+                    const public_id = filename.split('.')[0]; // Split the filename by periods ('.') and get the first part
+                    const response = await fetch(`${BASE_API_URL}/api/removeimagefiles`, 
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ public_id }), // Send the file name to delete
+                    });
+        
+                    const result = await response.json();
+                    
+                    if(result.success === false){
+                        toast.error(`${result.msg}`);
+                    }else{
+                        toast.success(`${result.msg}`);
+                        // data.prodImage?.map((item:any)=>{
+                            
+                        // })
+                    }      
+                } catch (error) {
+                    console.error('Error deleting image:', error);
+                }
+                }
+            };
+
     return ( 
         <div>
             <div className="flex flex-col w-full border-[1.5px] border-indigo-800 shadow-lg rounded-md p-9">
@@ -170,7 +216,40 @@ const UpdateProduct:React.FC<UpdateProductProps> =  ({categoryList, prodById}) =
                         <textarea  name="prodDesc" value={data.prodDesc} onChange={handleChange} className="inputBox" placeholder="Product description"></textarea>
                     </div>
                     <div className="flex flex-col gap-2">
-                        <label className="font-semibold">Image:</label>
+                        <label className="font-semibold">Color:</label>
+                        <div className="grid grid-cols-4 inputBox">
+                            <div className="flex items-center gap-2">
+                                <Checkbox onClick={()=>handleSetColor('bg-red-600')}/>
+                                <div className="h-[20px] w-full bg-red-600 rounded-sm"></div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Checkbox onClick={()=>handleSetColor('bg-indigo-800')}/>
+                                <div className="h-[20px] w-full bg-indigo-800 rounded-sm"></div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Checkbox onClick={()=>handleSetColor('bg-gray-300')}/>
+                                <div className="h-[20px] w-full bg-gray-300 rounded-sm"></div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Checkbox onClick={()=>handleSetColor('bg-black')}/>
+                                <div className="h-[20px] w-full bg-black rounded-sm"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex gap-3 my-3">
+                        {
+                            data.prodImage?.map((item:any, index:any)=>{
+                                return (
+                                    <div key={index} className="relative p-4 border-[1.5px] border-gray-500 rounded-md">
+                                        <Image alt="prodImage" src={item} width={250} height={250}/>
+                                        {data.prodImage ? (<button type="button" className="absolute btnRemove" onClick={()=>handleRemoveImage(item)}>Remove</button>) : (null)}
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <label className="font-semibold">Image:[Size: 350*350]</label>
                         <input type="file" className="inputBox" ></input>
                     </div>
                     <div className="flex items-center mb-2">  

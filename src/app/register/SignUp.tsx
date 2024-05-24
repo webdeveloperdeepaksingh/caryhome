@@ -87,8 +87,8 @@ const SignUp  = () => {
       }
 
     return ( 
-        <div>
-            <form className="flex flex-col w-[500px] p-9 gap-3 shadow-lg rounded-md border-[1.5px] border-indigo-800" onSubmit={handleSubmit}>
+        <div className="p-6 md:p-0">
+            <form className="flex flex-col max-w-[500px] p-9 gap-3 shadow-lg rounded-md border-[1.5px] border-indigo-800" onSubmit={handleSubmit}>
                 <div className="flex flex-col">
                     <label htmlFor="usrName" className="text-sm mb-2">Username:*</label>
                     <input type="text" className="inputBox" name="usrName" value={data.usrName} onChange={handleChange} placeholder="coachdeepak"></input>

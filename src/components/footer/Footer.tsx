@@ -7,7 +7,7 @@ import { AiFillInstagram, AiFillTwitterCircle, AiFillYoutube } from "react-icons
 
 function Footer() {
   return (
-    <footer className="bg-indigo-800 text-white mt-16">
+    <footer className="bg-indigo-800 text-white mt-16 p-6 md:p-0">
         <Container>
             <div className="flex flex-col md:flex-row justify-between pt-16 pb-8">
                 <FooterList>
@@ -35,10 +35,18 @@ function Footer() {
                 <FooterList>
                   <h3 className="uppercase text-xl font-bold">Follow Us</h3>
                   <div className="flex gap-2">
-                    <Link href="/#"><MdFacebook size={24}/></Link>
-                    <Link href="/#"><AiFillTwitterCircle size={24}/></Link>
-                    <Link href="/#"><AiFillInstagram size={24}/></Link>
-                    <Link href="/#"><AiFillYoutube size={24}/></Link>
+                    <div className="relative w-[40px] h-[40px] p-4 shadow-lg rounded-sm border-[1px] border-white hover:bg-indigo-700">
+                      <Link href="/#" className="absolute top-2 right-2"><MdFacebook size={24}/></Link>
+                    </div>
+                    <div className="relative w-[40px] h-[40px] p-4 shadow-lg rounded-sm border-[1px] border-white hover:bg-indigo-700">
+                      <Link href="/#" className="absolute top-2 right-2"><AiFillTwitterCircle size={24}/></Link>
+                    </div>
+                    <div className="relative w-[40px] h-[40px] p-4 shadow-lg rounded-sm border-[1px] border-white hover:bg-indigo-700">
+                      <Link href="/#" className="absolute top-2 right-2"><AiFillInstagram size={24}/></Link>
+                    </div>
+                    <div className="relative w-[40px] h-[40px] p-4 shadow-lg rounded-sm border-[1px] border-white hover:bg-indigo-700">
+                      <Link href="/#" className="absolute top-2 right-2"><AiFillYoutube size={24}/></Link>
+                    </div>
                   </div>
                 </FooterList>
             </div>

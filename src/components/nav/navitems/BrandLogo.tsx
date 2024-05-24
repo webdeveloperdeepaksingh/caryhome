@@ -4,9 +4,9 @@ import Image from "next/image";
 
 const BrandLogo = () => {
     return ( 
-        <div>     
+        <div className="border-r-[1.5px] border-indigo-800 pr-5">     
             <Link href="/">
-                <Image alt="CARRYHOME" src="/images/brandLogo.jpg" width={250} height={75}/> 
+                <Image alt="CARRYHOME" src="/images/brandLogo.jpg" width={205} height={75}/> 
             </Link>       
         </div>
      );

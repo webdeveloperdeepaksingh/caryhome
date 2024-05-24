@@ -5,7 +5,8 @@ import { RiFolderSettingsLine } from "react-icons/ri";
 import { PiPasswordFill } from "react-icons/pi";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { useCallback, useState } from "react";
-import Avatar from "../Avatar";
+import Avatar from "../../Avatar";
+import { MdDashboard } from "react-icons/md";
 import { AiFillCaretDown } from "react-icons/ai";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -59,6 +60,14 @@ const UserMenu = () => {
                         <div className="absolute rounded-md shadow-md w-[220px] bg-white overflow-hidden right-0 top-12 text-sm flex flex-col cursor-pointer">
                         {loggedInUser.result?._id ? 
                             <div className="p-3">
+                                <Link href="/dashboard/home">
+                                    <MenuItem onClick={toggleOn}>
+                                        <div className="flex items-center gap-2">
+                                            <MdDashboard size={24}/>
+                                            <p>Dashboard</p>
+                                        </div> 
+                                    </MenuItem>
+                                </Link>
                                 <Link href={`/dashboard/profile/${loggedInUser.result?._id}`}>
                                     <MenuItem onClick={toggleOn}>
                                         <div className="flex items-center gap-2">

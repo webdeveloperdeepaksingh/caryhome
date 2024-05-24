@@ -22,7 +22,7 @@ interface IProductType  {
     prodCat: string;
     prodDesc?: any;
     prodPrice: number;
-    prodColor: string;
+    prodColor: string[];
     prodImage:string[];
     prodBrand: string;
     prodReviews?: string[] | null;
@@ -44,7 +44,7 @@ const CreateProduct:React.FC<CreateProductProps> =  ({categoryList}) => {
             prodTags:'',
             prodCat:'',
             prodBrand:'',
-            prodColor:'',
+            prodColor:[],
             prodPrice:0,
             prodDesc:'',
             prodImage:[],
@@ -64,7 +64,7 @@ const CreateProduct:React.FC<CreateProductProps> =  ({categoryList}) => {
 
     const handleSetColor = (data:string) => {
         if(color.includes(data)){
-            setColor(color.filter(a=>a != data));
+            setColor(color.filter((clr:any)=> clr != data));
         }
         else{
             setColor([...color, data]);
@@ -264,7 +264,7 @@ const CreateProduct:React.FC<CreateProductProps> =  ({categoryList}) => {
                                 <div className="h-[20px] w-full bg-gray-300 rounded-sm"></div>
                             </div>
                             <div className="flex items-center gap-2">
-                                <Checkbox/>
+                                <Checkbox onClick={()=>handleSetColor('bg-black')}/>
                                 <div className="h-[20px] w-full bg-black rounded-sm"></div>
                             </div>
                         </div>
@@ -274,14 +274,14 @@ const CreateProduct:React.FC<CreateProductProps> =  ({categoryList}) => {
                             imgUrl.map((item:any, index:any)=>{
                                 return (
                                     <div key={index} className="p-4 border-[1.5px] border-gray-500 rounded-md">
-                                        <Image alt="prodImage" src={item} width={200} height={300}/>
+                                        <Image alt="prodImage" src={item} width={250} height={250}/>
                                     </div>
                                 )
                             })
                         }
                     </div>
                     <div className="flex flex-col gap-2">
-                        <label className="font-semibold">Image:</label>
+                        <label className="font-semibold">Image: [Size:350*350]</label>
                         <div className="flex gap-1">
                             <input type="file"  className="inputBox w-full" accept='image/*' multiple={true}  onChange={handleFileUpload}></input>
                             <button type="button" className="btnRight" onClick={handleImageUpload}>Upload</button>

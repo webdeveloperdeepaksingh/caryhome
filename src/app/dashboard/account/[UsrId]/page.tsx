@@ -1,7 +1,5 @@
 import AdminAccount from "../Account";
 import { BASE_API_URL } from "../../../../../utils/constant";
-
-
 interface IAccountParams {
     UsrId?: string;
 }

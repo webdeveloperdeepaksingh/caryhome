@@ -1,15 +1,18 @@
 "use client";
 import Link from "next/link";
 import Cookies from "js-cookie";
+import Loading from "./Loading";
 import { FaBox } from "react-icons/fa6";
 import { BiCategory } from "react-icons/bi";
 import { MdDashboard } from "react-icons/md";
 import { LuListOrdered } from "react-icons/lu";
 import { RiListSettingsFill } from "react-icons/ri";
 import { PiShoppingBagOpenFill } from "react-icons/pi";
-
+import { useEffect, useState } from "react";
+ 
 const SideBar = () => {
 
+    const [isLoading, setIsloading] = useState(true);
     const loggedInUser = {
         result:
         {
@@ -17,10 +20,22 @@ const SideBar = () => {
             usrRole:Cookies.get("loggedInUserRole")
         }
     };
+
+    useEffect(()=>{
+        if(loggedInUser.result.usrRole){
+            setIsloading(false);
+        }
+    },[])
+
+    if(isLoading){
+        return <div>
+            <Loading/>
+        </div>
+    }
     
     return ( 
         <div>
-            <div className="flex flex-col w-[250px] bg-indigo-800 h-screen p-5">
+            <div className="flex flex-col w-[250px] bg-indigo-800 h-screen p-6">
                 <div className="flex flex-col">
                     {
                         loggedInUser.result.usrRole === "Admin" ? 
@@ -67,7 +82,7 @@ const SideBar = () => {
                                         DASHBOARD
                                     </span>
                                 </Link>
-                                <Link href="/dashboard/myorders" className="flex items-center p-3 rounded-md border-[1.5px] border-white text-white hover:bg-white hover:text-black gap-3 mb-3">
+                                <Link href={`/dashboard/myorders/${loggedInUser.result._id}`} className="flex items-center p-3 rounded-md border-[1.5px] border-white text-white hover:bg-white hover:text-black gap-3 mb-3">
                                     <PiShoppingBagOpenFill size={24}/>
                                     <span className="font-semibold">
                                         MY ORDERS

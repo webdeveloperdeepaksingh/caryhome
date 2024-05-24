@@ -21,7 +21,7 @@ export const GET = async (request:NextRequest) => {
     try
     {  
         const url = new URL(request.url);
-        const query = url.searchParams.get('query');``
+        const query = url.searchParams.get('query');
       
         await dbConnect ();
         let prodList: ProductType[] = await  Products.find(); 

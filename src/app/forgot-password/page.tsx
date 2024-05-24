@@ -62,7 +62,7 @@ const ForgotPassword = () => {
     return ( 
         <div>
         <div className='flex w-auto h-screen justify-center items-center px-9'>
-           <form className="flex flex-col p-9 w-[360px] h-auto shadow-xl border-[1.5px] border-indigo-800 rounded-lg" onSubmit={handleSubmit}>
+           <form className="flex flex-col p-6 max-w-[360px] h-auto shadow-xl border-[1.5px] border-indigo-800 rounded-lg" onSubmit={handleSubmit}>
                <span className='text-center p-3 bg-gray-200 font-bold rounded-md mb-3'>PASSWORD RESET REQUEST</span>
                <div className='flex flex-col gap-2 mb-3'>
                    <label className="block font-semibold">Email Id: </label>
