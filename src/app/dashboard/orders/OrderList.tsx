@@ -1,5 +1,5 @@
 "use client";
-import { OrderType } from "@/app/api/order/route";
+import { OrderType } from "@/app/api/myorder/[UsrId]/route";
 import Link from "next/link";
 import { formatPrice } from "../../../../utils/formatPrice";
 import { BASE_API_URL } from "../../../../utils/constant";
