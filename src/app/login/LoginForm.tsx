@@ -79,8 +79,8 @@ const LoginForm  = () => {
       }
   
     return ( 
-        <div className="p-6 md:p-0">
-            <form className="flex flex-col max-w-[450px] p-9 gap-3 border-[1.5px] border-indigo-800 shadow-lg rounded-md" onSubmit={handleSubmit}>
+        <div className="flex w-auto p-6 md:p-0">
+            <form className="flex flex-col max-w-[650px] p-9 gap-3 border-[1.5px] border-indigo-800 shadow-lg rounded-md" onSubmit={handleSubmit}>
                 <div className="flex flex-col">
                     <label htmlFor="usrName" className="text-sm mb-2">Username or Email:*</label>
                     <input type="text" className="inputBox" name="usrName" value={user.usrName} onChange={handleChange} placeholder="coachdeepak@gmail.com"></input>

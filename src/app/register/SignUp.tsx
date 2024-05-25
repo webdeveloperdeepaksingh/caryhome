@@ -97,7 +97,7 @@ const SignUp  = () => {
                     <label htmlFor="usrName" className="text-sm mb-2">Email Id:*</label>
                     <input type="text" className="inputBox" name="usrEmail" value={data.usrEmail} onChange={handleChange} placeholder="coachdeepak@gmail.com"></input>
                 </div>
-                <div className="grid grid-cols-2 gap-1">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
                   <div className="flex flex-col">
                       <label htmlFor="createPass" className="text-sm mb-2">Create Password:*</label>
                       <input type="password" className="inputBox" name="usrPass" value={data.usrPass} onChange={handleChange} placeholder="min-8 alphaNum char."></input>

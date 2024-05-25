@@ -6,7 +6,7 @@ const BrandLogo = () => {
     return ( 
         <div className="border-r-[1.5px] border-indigo-800 pr-5">     
             <Link href="/">
-                <Image alt="CARRYHOME" src="/images/brandLogo.jpg" width={205} height={75}/> 
+                <Image alt="CARRYHOME" src="/images/brandLogo.jpg" width={162} height={75}/> 
             </Link>       
         </div>
      );

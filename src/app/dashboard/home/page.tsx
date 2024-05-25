@@ -31,12 +31,12 @@ const Home = () => {
 
     return ( 
         <div>
-            <div className="flex flex-col gap-9 p-9 border-[1.5px] border-indigo-800 rounded-md">
+            <div className="flex flex-col w-full gap-9 p-9 border-[1.5px] border-indigo-800 rounded-md">
                 {
                     loggedInUser.result.usrRole === "Admin" ? 
                     (
                         <>
-                            <div className="grid grid-cols-2 gap-1">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-1 w-full">
                                 <div className="border-[1.5px] border-indigo-800 rounded-md">
                                     <MonthlySales/>
                                 </div>

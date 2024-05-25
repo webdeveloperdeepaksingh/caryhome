@@ -88,7 +88,7 @@ const WeeklySalesChart = () => {
 
     return ( 
         <div>
-           <div className='flex'>
+           <div className='flex w-full'>
               <Line data={data} options={options} />
            </div>
         </div>

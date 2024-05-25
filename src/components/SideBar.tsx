@@ -79,7 +79,7 @@ const SideBar = () => {
     
     return ( 
         <div>
-            <div className="flex flex-col w-[250px] bg-indigo-800 h-screen p-6">
+            <div className="flex bg-indigo-800 h-screen p-6">
                 <div className="flex flex-col">
                     {
                         loggedInUser.result.usrRole === "Admin" ? 
@@ -89,12 +89,12 @@ const SideBar = () => {
                                     adminMenu.map((item:any)=>{
                                         return (
                                             <Link key={item.url} href={item.url}  className={currentPath === `${item.url}` ? "flex items-center p-3 rounded-md border-[1.5px] border-white text-black bg-white gap-3  mb-3" : "flex items-center p-3 rounded-md border-[1.5px] border-white text-white hover:bg-white hover:text-black gap-3 mb-3"}>
-                                                <span>
+                                                <div>
                                                     {item.icon}
-                                                </span>
-                                                <span className="font-semibold">
+                                                </div>
+                                                <div className="hidden font-semibold lg:block">
                                                     {item.name}
-                                                </span> 
+                                                </div> 
                                             </Link>
                                         )
                                     })
@@ -111,9 +111,9 @@ const SideBar = () => {
                                                 <div>
                                                     {item.icon}
                                                 </div>
-                                                <span className="font-semibold">
+                                                <div className="hidden font-semibold lg:block">
                                                     {item.name}
-                                                </span> 
+                                                </div> 
                                             </Link>
                                         )
                                     })
