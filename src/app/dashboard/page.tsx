@@ -1,18 +1,13 @@
-"use client";
-import SideBar from "../../components/SideBar";
 
 interface InnerLayoutProps {
     children: React.ReactNode;
 }
 
-const InnerLayout:React.FC<InnerLayoutProps> = ({children}) => {
+const DashboardLayout:React.FC<InnerLayoutProps> = ({children}) => {
 
     return ( 
         <div>
             <div className="flex w-auto">
-                <div>
-                    <SideBar/>
-                </div>
                 <main className="w-full h-[630px] p-5 overflow-auto">
                     {children}
                 </main>
@@ -21,4 +16,4 @@ const InnerLayout:React.FC<InnerLayoutProps> = ({children}) => {
      );
 }
  
-export default InnerLayout;
+export default DashboardLayout;

@@ -1,5 +1,5 @@
-import InnerLayout from "./page";
-
+import SideBar from "@/components/SideBar";
+import DashboardLayout from "./page";
 interface CommonInnerlayoutProps {
     children : React.ReactNode;
 }
@@ -7,10 +7,15 @@ interface CommonInnerlayoutProps {
 const CommonInnerlayout: React.FC<CommonInnerlayoutProps> = ({children}) => {
 
     return (
-      <div>
-        <InnerLayout>
-          {children}
-        </InnerLayout>
+      <div className="flex w-auto">
+        <div>
+          <SideBar/>
+        </div>
+        <div className="w-full">
+          <DashboardLayout>
+              {children}
+          </DashboardLayout>
+        </div>       
        </div>
     )
   }
