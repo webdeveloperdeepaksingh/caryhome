@@ -2,8 +2,7 @@ import AddRating from "../AddRating";
 import ListRating from "../ListRating";
 import ProductDetails from "../ProductDetails";
 import { IProdParams } from "@/app/dashboard/update-product/[ProdId]/page";
-import { getProductById } from "@/app/dashboard/update-product/[ProdId]/page";
-
+import { getProductById } from "@/app/dashboard/update-product/[ProdId]/getProductById";
 
 const MainProductLandingPage = async ({params}: {params:IProdParams}) => {
 

@@ -1,6 +1,5 @@
 import ChangePassword from "../ChangePassword";
-import { getAccount } from "../../account/[UsrId]/page";
-
+import { getAccount } from "../../account/[UsrId]/getAccount";
 interface IAccountParams {
     UsrId?: string;
 }

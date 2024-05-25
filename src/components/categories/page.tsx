@@ -1,9 +1,9 @@
 import CategoryItems from "./CategoryItems";
-import { getCatData } from "@/app/dashboard/categories/page";
+import { getCatList } from "@/app/dashboard/categories/getCatList";
 
 const Categories = async () => {
 
-    const catItems = await getCatData();
+    const catItems = await getCatList();
 
     return ( 
         <div>

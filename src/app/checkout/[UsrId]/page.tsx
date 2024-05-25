@@ -1,7 +1,7 @@
 import Container from "@/components/Container";
 import FormWrap from "@/components/FormWrap";
 import CheckoutForm from "../CheckoutForm";
-import { getAccount } from "../../dashboard/account/[UsrId]/page";
+import { getAccount } from "@/app/dashboard/account/[UsrId]/getAccount";
 
 interface IAccountParams {
     UsrId?: string;

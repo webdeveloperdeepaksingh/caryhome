@@ -62,18 +62,11 @@ const CheckoutForm : React.FC<CheckoutFormProps> = ({accData}) => {
             console.error('Error updating address.', error);
         } 
     };
-    
-
-    const handleSubmit = () => {
-
-    }
-
-
 
     return ( 
         <div>
              <div>
-                <form onSubmit={handleSubmit} >
+                <form >
                     <div className="flex flex-col gap-4">
                         <div className="flex flex-col w-full">
                             <h2 className="text-lg mt-4 mb-2 uppercase font-bold">Address Details:</h2>

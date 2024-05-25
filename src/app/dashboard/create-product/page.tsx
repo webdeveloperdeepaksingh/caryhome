@@ -1,10 +1,10 @@
-import { getCatData } from "../categories/page";
+import { getCatList } from "../categories/getCatList";
 import CreateProduct from "./CreateProduct";
 
 
 const MainCreateProduct = async () => {
 
-    const categoryList = await getCatData();
+    const categoryList = await getCatList();
 
     return ( 
         <div>

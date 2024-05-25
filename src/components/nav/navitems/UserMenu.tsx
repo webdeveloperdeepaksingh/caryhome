@@ -84,7 +84,7 @@ const UserMenu = () => {
                                         </div> 
                                     </MenuItem>
                                 </Link>
-                                <Link href={`/dashboard/changepassword/${loggedInUser.result?._id}`}>
+                                <Link href={`/dashboard/change-password/${loggedInUser.result?._id}`}>
                                     <MenuItem onClick={toggleOn}>
                                         <div className="flex items-center gap-2">
                                             <PiPasswordFill size={24} />
