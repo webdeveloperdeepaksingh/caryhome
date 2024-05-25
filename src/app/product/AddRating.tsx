@@ -1,6 +1,6 @@
 "use client";
 import toast from "react-hot-toast";
-import { OrderType } from "../api/order/route";
+import { OrderType } from "../api/myorder/[UsrId]/route";
 import { Rating } from "@mui/material";
 import Heading from "@/components/Heading";
 import { BASE_API_URL } from "../../../utils/constant";
@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 interface AddRatingProps {
     prodById: any 
 }
-
 
 const AddRating: React.FC<AddRatingProps> = ({prodById}) => {
 
