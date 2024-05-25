@@ -12,12 +12,12 @@ type StoreType = {
 
 const CartIcon = () => {
 
-    const [isLoading, setIsloading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const cartItems = useSelector((store: StoreType) => store.cart);
 
     useEffect(()=>{
-       if(cartItems.items.length>=0){
-        setIsloading(false);
+       if(cartItems.items.length >=0){
+        setIsLoading(false);
       }
     },[cartItems.items])
 

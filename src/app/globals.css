@@ -27,7 +27,7 @@ body {
 }
 
 .btnLeft{
-  padding: 6px 10px;
+  padding: 9px 16px;
   background-color: #3730a3;
   color: white;
   cursor: pointer;
@@ -38,21 +38,6 @@ body {
 }
 
 .btnLeft:hover{
-  background-color: #4338ca;
-}
-
-.btnLearn{
-  padding: 12px;
-  background-color: #3730a3;
-  color: white;
-  cursor: pointer;
-  text-align: center;
-  font-weight: bold;
-  font-size: 18px;
-  border-radius: 4px;
-}
-
-.btnLearn:hover{
   background-color: #4338ca;
 }
 

@@ -1,4 +1,5 @@
 "use client";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import Loading from "./Loading";
@@ -13,6 +14,8 @@ import { useEffect, useState } from "react";
 const SideBar = () => {
 
     const [isLoading, setIsloading] = useState(true);
+    const currentPath = usePathname();
+
     const loggedInUser = {
         result:
         {
@@ -26,6 +29,47 @@ const SideBar = () => {
             setIsloading(false);
         }
     },[])
+
+    const adminMenu = [
+        {
+            name:'DASHBOARD',
+            url:'/dashboard/home',
+            icon:<MdDashboard size={24}/>
+        },
+        {
+            name:'CATEGORIES',
+            url:'/dashboard/categories',
+            icon:<BiCategory size={24}/>
+        },
+        {
+            name:'PRODUCTS',
+            url:'/dashboard/products',
+            icon:<FaBox size={24}/>
+        },
+        {
+            name:'ORDERS',
+            url:'/dashboard/orders',
+            icon:<LuListOrdered size={24}/>
+        },
+        {
+            name:'SETTINGS',
+            url:'/dashboard/settings/66309b42e0784b14338dc76f',
+            icon:<RiListSettingsFill size={24}/>
+        },
+      ]
+
+      const userMenu = [
+        {
+            name:'DASHBOARD',
+            url:'/dashboard/home',
+            icon:<MdDashboard size={24}/>
+        },
+        {
+            name:'MY ORDERS',
+            url:`/dashboard/myorders/${loggedInUser.result._id}`,
+            icon:<PiShoppingBagOpenFill size={24}/>
+        }
+      ]
 
     if(isLoading){
         return <div>
@@ -41,53 +85,39 @@ const SideBar = () => {
                         loggedInUser.result.usrRole === "Admin" ? 
                         (
                             <div>
-                                <Link href="/dashboard/home" className="flex items-center p-3 rounded-md border-[1.5px] border-white text-white hover:bg-white hover:text-black gap-3 mb-3">
-                                    <MdDashboard size={24}/>
-                                    <span className="font-semibold">
-                                        DASHBOARD
-                                    </span>
-                                </Link>
-                                <Link href="/dashboard/categories" className="flex items-center p-3 rounded-md border-[1.5px] border-white text-white hover:bg-white hover:text-black gap-3 mb-3">
-                                    <BiCategory size={24}/>
-                                    <span className="font-semibold">
-                                        CATEGORIES
-                                    </span>
-                                </Link>
-                                <Link href="/dashboard/products" className="flex items-center p-3 rounded-md border-[1.5px] border-white text-white hover:bg-white hover:text-black gap-3 mb-3">
-                                    <FaBox size={24}/>
-                                    <span className="font-semibold">
-                                        PRODUCTS
-                                    </span>
-                                </Link>
-                                <Link href="/dashboard/orders" className="flex items-center p-3 rounded-md border-[1.5px] border-white text-white hover:bg-white hover:text-black gap-3 mb-3">
-                                    <LuListOrdered size={24}/>
-                                    <span className="font-semibold">
-                                        ORDERS
-                                    </span>
-                                </Link>
-                                <Link href={`/dashboard/settings/66309b42e0784b14338dc76f`} className="flex items-center p-3 rounded-md border-[1.5px] border-white text-white hover:bg-white hover:text-black gap-3 mb-3">
-                                    <RiListSettingsFill size={24}/>
-                                    <span className="font-semibold">
-                                        SETTINGS
-                                    </span>
-                                </Link>
+                                {
+                                    adminMenu.map((item:any)=>{
+                                        return (
+                                            <Link key={item.url} href={item.url}  className={currentPath === `${item.url}` ? "flex items-center p-3 rounded-md border-[1.5px] border-white text-black bg-white gap-3  mb-3" : "flex items-center p-3 rounded-md border-[1.5px] border-white text-white hover:bg-white hover:text-black gap-3 mb-3"}>
+                                                <span>
+                                                    {item.icon}
+                                                </span>
+                                                <span className="font-semibold">
+                                                    {item.name}
+                                                </span> 
+                                            </Link>
+                                        )
+                                    })
+                                }
                             </div>
                         ) 
                         : 
                         (
                             <div>
-                                <Link href="/dashboard/home" className="flex items-center p-3 rounded-md border-[1.5px] border-white text-white hover:bg-white hover:text-black gap-3 mb-3">
-                                    <MdDashboard size={24}/>
-                                    <span className="font-semibold">
-                                        DASHBOARD
-                                    </span>
-                                </Link>
-                                <Link href={`/dashboard/myorders/${loggedInUser.result._id}`} className="flex items-center p-3 rounded-md border-[1.5px] border-white text-white hover:bg-white hover:text-black gap-3 mb-3">
-                                    <PiShoppingBagOpenFill size={24}/>
-                                    <span className="font-semibold">
-                                        MY ORDERS
-                                    </span>
-                                </Link>
+                                {
+                                    userMenu.map((item:any)=>{
+                                        return (
+                                            <Link key={item.url} href={item.url}  className={currentPath === `${item.url}` ? "flex items-center p-3 rounded-md border-[1.5px] border-white text-black bg-white gap-3  mb-3" : "flex items-center p-3 rounded-md border-[1.5px] border-white text-white hover:bg-white hover:text-black gap-3 mb-3"}>
+                                                <div>
+                                                    {item.icon}
+                                                </div>
+                                                <span className="font-semibold">
+                                                    {item.name}
+                                                </span> 
+                                            </Link>
+                                        )
+                                    })
+                                }
                             </div>
                         )
                     }

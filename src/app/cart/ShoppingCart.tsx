@@ -2,7 +2,7 @@
 import EmptyCart from "./EmptyCart";
 import { CartItemType } from "../product/ProductDetails";
 import SetQuantity from "@/components/SetQuantity";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { clearCartItems } from "../../../redux/slices/cartSlice";
@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Heading from "@/components/Heading";
 import { formatPrice } from "../../../utils/formatPrice";
 import Image from "next/image";
+import Loading from "./Loading";
 
 
 type StoreType = {
@@ -26,7 +27,20 @@ const ShoppingCart = () => {
 
     const router = useRouter();
     const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(true);
     const cartItems = useSelector((store:StoreType) => store.cart);
+
+    useEffect(()=>{
+        if(cartItems.items.length >= 0){
+         setIsLoading(false);
+       }
+     },[cartItems.items])
+ 
+     if(isLoading){
+       return <div>
+           <Loading/>
+       </div>
+     }
 
     const loggedInUser = {
         result:
@@ -48,7 +62,6 @@ const ShoppingCart = () => {
         dispatch(handleMinusCartQty(product));
     }
     
-
     const handleRemove = (product:any) => {
         dispatch(removeFromCart(product));
         toast.success('Product removed from cart.');
@@ -59,16 +72,14 @@ const ShoppingCart = () => {
         toast.success("Cleared all items from cart.");
     }
 
-    if(cartItems.totalItems === 0){
+    if(cartItems?.items?.length === 0){
         return<div>
             <EmptyCart/>
         </div>
-    }
-
-    console.log(cartItems);
+     }
 
     return ( 
-        <div>     
+        <div className="flex flex-col">     
             <div className="text-center">
                 <Heading title="Shopping Cart" />
             </div>
@@ -118,32 +129,32 @@ const ShoppingCart = () => {
                 }
             </div>
             <div className="border-t-[1.5px] border-indigo-800 py-4 gap-4 mt-6 flex justify-between">
-            <div className="w-[180px]">
-                <button type="button" className="btnLeft" onClick={handleClearCart}>Clear Cart</button>
-            </div>
-            <div className="flex flex-col text-sm gap-1 items-start p-6 bg-gray-100 rounded-md">
-                <div className="flex gap-3 justify-between w-full text-md font-semibold">
-                    <span>Subtotal:</span>
-                    <span>{formatPrice(subTotal)}</span>
+                <div className="w-[180px]">
+                    <button type="button" className="btnLeft" onClick={handleClearCart}>Clear Cart</button>
                 </div>
-                <div className="flex gap-3 justify-between w-full text-md">
-                    <span>Tax: 6%</span>
-                    <span>{formatPrice(tax)}</span>
+                <div className="flex flex-col text-sm gap-1 items-start p-6 bg-gray-100 rounded-md">
+                    <div className="flex gap-3 justify-between w-full text-md font-semibold">
+                        <span>Subtotal:</span>
+                        <span>{formatPrice(subTotal)}</span>
+                    </div>
+                    <div className="flex gap-3 justify-between w-full text-md">
+                        <span>Tax: 6%</span>
+                        <span>{formatPrice(tax)}</span>
+                    </div>
+                    <div className="flex gap-3 justify-between w-full text-md">
+                        <span>Shipping:</span>
+                        <span>{formatPrice(370)}</span>
+                    </div>
+                    <div className="flex gap-3 justify-between w-full text-md">
+                        <span>Total:</span>
+                        <span>{formatPrice(subTotal+tax+shippingCharge)}</span>
+                    </div>
+                    <div className="w-full">
+                        <button type="button" className="btnLeft w-full" onClick={()=>{loggedInUser.result._id ? router.push(`/checkout/${loggedInUser.result._id}`): router.push('/login?navigate=checkout')}}>
+                                {loggedInUser.result._id ? "Checkout" : "Login to checkout"}
+                        </button>
+                    </div>
                 </div>
-                <div className="flex gap-3 justify-between w-full text-md">
-                    <span>Shipping:</span>
-                    <span>{formatPrice(370)}</span>
-                </div>
-                <div className="flex gap-3 justify-between w-full text-md">
-                    <span>Total:</span>
-                    <span>{formatPrice(subTotal+tax+shippingCharge)}</span>
-                </div>
-                <div className="w-full">
-                    <button type="button" className="btnLeft w-full" onClick={()=>{loggedInUser.result._id ? router.push(`/checkout/${loggedInUser.result._id}`): router.push('/login?navigate=checkout')}}>
-                            {loggedInUser.result._id ? "Checkout" : "Login to checkout"}
-                    </button>
-                </div>
-            </div>
             </div>
         </div>
      );   
