@@ -2,8 +2,24 @@ import AddRating from "../AddRating";
 import ListRating from "../ListRating";
 import ProductDetails from "../ProductDetails";
 import { IProdParams } from "@/app/dashboard/update-product/[ProdId]/page";
-import { getProductById } from "@/app/dashboard/update-product/[ProdId]/getProductById";
 import { BASE_API_URL } from "../../../../utils/constant";
+
+
+async function getProductById(id:IProdParams){
+    
+    try 
+    {
+        const res = await fetch(`${BASE_API_URL}/api/product/${id.ProdId}`,{ cache: 'no-store' });
+        if (!res.ok) {
+            throw new Error('Failed to fetch prodData');
+        }
+        const prodById = await res.json();
+        return prodById;
+
+    } catch (error) {
+        console.error("Error fetching prodData: ", error);
+    }
+};
 
 const MainProductLandingPage = async ({params}: {params:IProdParams}) => {
 

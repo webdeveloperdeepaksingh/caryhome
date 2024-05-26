@@ -1,7 +1,21 @@
 import { BASE_API_URL } from "../../../../utils/constant";
-import { getCatList } from "../categories/getCatList";
 import CreateProduct from "./CreateProduct";
 
+async function getCatList(){
+
+try 
+    {
+        const res = await fetch(`${BASE_API_URL}/api/category`,{ cache: 'no-store' });
+        if (!res.ok) {
+            throw new Error('Failed to fetch data')
+        }   
+        const catList = res.json();
+        return catList;
+
+    } catch (error) {
+        console.error("Error fetching catData: ", error);
+    }
+};
 
 const MainCreateProduct = async () => {
 

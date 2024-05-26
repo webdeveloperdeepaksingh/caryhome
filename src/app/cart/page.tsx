@@ -4,7 +4,6 @@ import ShoppingCart from "./ShoppingCart";
 
 const Cart = async () => {
 
-
     return ( 
         <div className="pt-8">
           <Container>
