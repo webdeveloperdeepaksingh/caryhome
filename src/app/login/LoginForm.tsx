@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { AiOutlineGoogle } from "react-icons/ai";
 import Cookies from 'js-cookie';
 import { BASE_API_URL } from "../../../utils/constant";
+import Loading from "./Loading";
  
 type LoginType = {
     usrName: string;
@@ -116,4 +117,10 @@ const LoginForm  = () => {
      );
 }
  
-export default LoginForm;
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div><Loading /></div>}>
+      <LoginForm />
+    </Suspense>
+  );
+}
