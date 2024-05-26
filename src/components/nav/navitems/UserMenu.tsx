@@ -1,5 +1,4 @@
 "use client";
-import { PiShoppingBagOpenFill } from "react-icons/pi";
 import { RiFolderUserLine } from "react-icons/ri";
 import { RiFolderSettingsLine } from "react-icons/ri";
 import { PiPasswordFill } from "react-icons/pi";

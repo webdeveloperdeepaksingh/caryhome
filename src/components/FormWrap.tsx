@@ -1,3 +1,5 @@
+"use client";
+
 const FormWrap = ({children} : {children : React.ReactNode}) => {
     
     return ( 

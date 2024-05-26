@@ -1,3 +1,4 @@
+"use client";
 import Container from "./Container";
 
 interface HeadingProps{

@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { FaUserCircle } from "react-icons/fa";
 

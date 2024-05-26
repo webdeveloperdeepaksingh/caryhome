@@ -1,3 +1,4 @@
+"use client";
 import Container from "../../Container";
 import CartIcon from "./CartIcon";
 import BrandLogo from "./BrandLogo";
