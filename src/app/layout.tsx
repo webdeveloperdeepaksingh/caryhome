@@ -5,8 +5,6 @@ import { Toaster } from 'react-hot-toast';
 import Providers from '../../redux/providers';
 import Script from 'next/script';
 
-export const dynamic = "force-dynamic";
-
 const inter = Inter({ subsets: ['latin'] })
 
 export default  function RootLayout({children,}: {children: React.ReactNode}) {
