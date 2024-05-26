@@ -3,9 +3,13 @@ import ListRating from "../ListRating";
 import ProductDetails from "../ProductDetails";
 import { IProdParams } from "@/app/dashboard/update-product/[ProdId]/page";
 import { getProductById } from "@/app/dashboard/update-product/[ProdId]/getProductById";
+import { BASE_API_URL } from "../../../../utils/constant";
 
 const MainProductLandingPage = async ({params}: {params:IProdParams}) => {
 
+    if(!BASE_API_URL){
+        return null;
+    }
     const prodById = await getProductById(params);
 
     return ( 

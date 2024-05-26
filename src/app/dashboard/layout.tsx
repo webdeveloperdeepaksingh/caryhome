@@ -3,8 +3,6 @@ import SideBar from "@/components/SideBar";
     children : React.ReactNode;
 }
 
-export const dynamic = 'force-dynamic';
-
 const CommonInnerlayout: React.FC<CommonInnerlayoutProps> = ({children}) => {
 
     return (

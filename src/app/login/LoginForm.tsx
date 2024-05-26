@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { AiOutlineGoogle } from "react-icons/ai";
 import Cookies from 'js-cookie';
@@ -13,7 +14,8 @@ type LoginType = {
 }
 
 const LoginForm  = () => { 
-    const urlSearchParams = new URLSearchParams(window.location.search);    
+  
+    const urlSearchParams = useSearchParams();    
     const navigate = urlSearchParams.get('navigate');
     const router = useRouter();
     const [errorMessage, setErrorMessage] = useState('');

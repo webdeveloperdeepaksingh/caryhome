@@ -1,7 +1,8 @@
 "use client";
-import React from 'react';
+import React, { Suspense } from 'react';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
+import Loading from './Loading';
 import { useSearchParams } from 'next/navigation';
 
 const Success = () => {
@@ -32,4 +33,10 @@ const Success = () => {
   )
 }
 
-export default Success
+export default function PaymentSuccess() {
+    return (
+      <Suspense fallback={<div><Loading /></div>}>
+        <Success />
+      </Suspense>
+    );
+  }
