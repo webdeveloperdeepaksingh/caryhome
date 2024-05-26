@@ -11,7 +11,7 @@ try
             throw new Error('Failed to fetch data')
         }   
         
-        const catList = res.json();
+        const catList = await res.json();
         return catList;
 
     } catch (error) {
@@ -20,6 +20,10 @@ try
 };
 
 const Categories = async () => {
+
+    if(!BASE_API_URL){
+        return null;
+    }
 
     const catItems = await getCatList();
 

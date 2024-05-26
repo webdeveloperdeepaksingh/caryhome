@@ -7,8 +7,7 @@ import { useRouter  } from 'next/navigation';
 import Loading from "./Loading";
 import Cookies from "js-cookie";
 import { useSelector, useDispatch } from "react-redux";
-import { CartItemType } from "@/app/product/ProductDetails";
-
+ 
 type StoreType = {
   store: unknown
   cart:any;
