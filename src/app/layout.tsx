@@ -8,6 +8,7 @@ import Footer from '@/components/footer/Footer'
 import Providers from '../../redux/providers'
 import Script from 'next/script';
 
+export const dynamic = "force-dynamic";
 
 const inter = Inter({ subsets: ['latin'] })
 
