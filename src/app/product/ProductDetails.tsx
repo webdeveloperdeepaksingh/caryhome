@@ -9,7 +9,7 @@ import ProductImage from "../../components/ProductImage";
 import { useState, useCallback, useEffect } from "react";
 import { formatPrice } from "../../../utils/formatPrice";
 import SetColor from "@/components/SetColor";
- 
+  
 interface ProductDetailsProps {
     prodById:any;
 }

@@ -1,11 +1,8 @@
-"use client";
-import NavBar from '@/components/nav/navitems/NavBar'
-import { usePathname } from 'next/navigation';
-import './globals.css'
-import { Inter } from 'next/font/google'
-import { Toaster } from 'react-hot-toast'
-import Footer from '@/components/footer/Footer'
-import Providers from '../../redux/providers'
+import NavBar from '@/components/nav/navitems/NavBar';
+import './globals.css';
+import { Inter } from 'next/font/google';
+import { Toaster } from 'react-hot-toast';
+import Providers from '../../redux/providers';
 import Script from 'next/script';
 
 export const dynamic = "force-dynamic";
@@ -13,8 +10,6 @@ export const dynamic = "force-dynamic";
 const inter = Inter({ subsets: ['latin'] })
 
 export default  function RootLayout({children,}: {children: React.ReactNode}) {
-
-  const pathName = usePathname();
   
   return (
     <>
@@ -32,7 +27,6 @@ export default  function RootLayout({children,}: {children: React.ReactNode}) {
           }}}/>
           <NavBar/>
           {children}
-          {pathName.startsWith("/dashboard") ? null : <Footer/>} 
         </body>
       </html>
       <Script src="https://checkout.razorpay.com/v1/checkout.js"/>
