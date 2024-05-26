@@ -1,17 +1,16 @@
 import Stripe from "stripe";
 import { NextResponse, NextRequest } from "next/server";
 import Orders from "../../../../models/Order";
-import { CartItemType } from "@/app/product/ProductDetails";
-
+ 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
     apiVersion: "2024-04-10"
 });
 
 export async function POST(request:NextRequest) {
 
-const body = await request.json();
-const { items, payment_intent_id } = body;
-const total = items.totalPrice * 100;
+    const body = await request.json();
+    const { items, payment_intent_id } = body;
+    const total = items.totalPrice * 100;
 
 try 
 {

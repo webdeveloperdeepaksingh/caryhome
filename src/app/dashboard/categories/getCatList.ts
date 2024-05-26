@@ -8,7 +8,8 @@ export const getCatList = async () => {
         if (!res.ok) {
             throw new Error('Failed to fetch data')
         }   
-        return res.json();
+        const catList = res.json();
+        return catList;
 
     } catch (error) {
         console.error("Error fetching catData: ", error);

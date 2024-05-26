@@ -1,5 +1,5 @@
+import { getCatList } from "./getCatList"; 
 import CategoryList from "./CategoryList";
- import { getCatList } from "./getCatList"; 
   
 const Categories = async () => {
      
