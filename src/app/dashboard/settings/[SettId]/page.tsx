@@ -13,7 +13,7 @@ async function getSettData (id:ISettingParams){
             if (!res.ok) {
                 throw new Error('Failed to fetch settData.');
             }   
-            const settingData = res.json();
+            const settingData = await res.json();
             return settingData;
      
         } catch (error) {

@@ -15,7 +15,7 @@ const OrderList:React.FC<OrderListProps> = ({orderData}) => {
     const [orderBySearchTerm, setOrderBySearchTerm] = useState<string[] | null>([]);
 
     useEffect(()=>{
-        async function fetchOrderList(){      
+    async function fetchOrderList(){      
         try 
             {               
                 const res = await fetch(`${BASE_API_URL}/api/search-order?query=${searchTerm}` , {cache:'no-store'});
@@ -51,9 +51,6 @@ const OrderList:React.FC<OrderListProps> = ({orderData}) => {
                         className='py-2 px-3 max-w-[400px] focus:outline-indigo-800'
                         placeholder='Search order/payment id...'
                     /> 
-                </div>
-                <div>
-                    <Link href='/dashboard/category' className='py-3 px-3 rounded-sm bg-indigo-800 hover:bg-indigo-600 text-white font-bold'>ADD</Link>
                 </div>
             </div>
             <table className="table-auto w-full text-left">

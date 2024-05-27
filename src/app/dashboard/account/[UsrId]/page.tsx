@@ -9,11 +9,10 @@ async function getAccount(id: IAccountParams) {
     
 try 
     {
-        const res = await fetch(`${BASE_API_URL}/api/account/${id.UsrId}`, {
-        cache: "no-store",
-        });
+        const res = await fetch(`${BASE_API_URL}/api/account/${id.UsrId}`, {cache: "no-store"});
+
         if (!res.ok) {
-        throw new Error("Failed to fetch data");
+            throw new Error("Failed to fetch data");
         }
         const adminAcc = await res.json();
         return adminAcc;
@@ -27,8 +26,8 @@ const MainAdminAccount = async ({params}:{params:IAccountParams}) => {
     if(!BASE_API_URL){
         return null;
     }
-    const accData = await getAccount(params);
-    
+
+    const accData = await getAccount(params); 
     return ( 
         <div>
             <AdminAccount accData={accData.accData}/>

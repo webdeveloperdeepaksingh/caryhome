@@ -1,7 +1,8 @@
 "use client";
 import { BASE_API_URL } from "../../../../utils/constant";
 import toast from "react-hot-toast";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface SettingPageProps {
     settData: SettType;
@@ -22,7 +23,7 @@ interface ISettType {
 
 const SettingPage:React.FC<SettingPageProps> = ({settData}) => {
 
-    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
     const [data, setData] = useState<ISettType>({webTitle:settData.webTitle, webTags:settData.webTags, metaData:settData.metaData });
 
     const handleChange = (e:ChangeEvent<HTMLInputElement> ): void => {
@@ -33,12 +34,15 @@ const SettingPage:React.FC<SettingPageProps> = ({settData}) => {
     
     const handleSubmit = async (e:FormEvent<HTMLFormElement>):Promise<void> => {
     e.preventDefault();
-    setIsLoading(true);  
     try 
     {
         const response = await fetch(`${BASE_API_URL}/api/setting/${settData._id}`, {
-        method: 'PUT',
-        body: JSON.stringify({ webTitle: data.webTitle, webTags: data.webTags, metaData: data.metaData }),
+            method: 'PUT',
+            body: JSON.stringify({ 
+                webTitle: data.webTitle, 
+                webTags: data.webTags, 
+                metaData: data.metaData 
+            }),
         });
     
         const post = await response.json();
@@ -47,13 +51,12 @@ const SettingPage:React.FC<SettingPageProps> = ({settData}) => {
         if (post.success === false) {
             toast.error('Error saving data.');
         } else {
-            toast.success('Data saved successfully!');     
+            toast.success('Settings changed successfully!'); 
+            router.refresh();    
          }
     } catch (error) {
         console.error("Error saving settData: ", error);
-    } finally {
-        setIsLoading(false);
-      }
+    } 
     };  
 
     return ( 

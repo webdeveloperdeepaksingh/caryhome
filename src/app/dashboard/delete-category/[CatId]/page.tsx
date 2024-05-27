@@ -19,10 +19,10 @@ const DeleteCategory = ({params}:{params: DelCatParams}): JSX.Element  => {
 
       if (!res.ok) {
         throw new Error('Failed to delete category');
-      }
-      toast.success("Category deleted successfully.");
-      router.push('/dashboard/categories');
-
+      }else{
+        toast.success("Category deleted successfully.");
+        router.push('/dashboard/categories');
+      } 
     } catch (error) {
         toast.error("Category deletion failed.");
     }

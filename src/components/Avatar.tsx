@@ -8,13 +8,16 @@ interface AvatarProps{
 
 const Avatar:React.FC<AvatarProps> = ({src}) => {
 
-    if(src){
-       <Image src={src} alt="Avatar" className="rounded-full" height={30} width={30}/>
-    }
-
     return ( 
-        <div className="">
-            <FaUserCircle size={24}/>
+        <div >
+            <div>
+                {
+                    src ? 
+                    (<Image src={src} alt="Avatar" className="rounded-full" height={32} width={32}/>)
+                    :
+                    (<FaUserCircle size={30}/>) 
+                }
+            </div>
         </div>
      );
 }

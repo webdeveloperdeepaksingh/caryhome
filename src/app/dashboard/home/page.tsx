@@ -31,6 +31,7 @@ const Home = () => {
 
     return ( 
         <div>
+            <title>DASHBOARD</title>
             <div className="flex flex-col w-full gap-9 p-9 border-[1.5px] border-indigo-800 rounded-md">
                 {
                     loggedInUser.result.usrRole === "Admin" ? 

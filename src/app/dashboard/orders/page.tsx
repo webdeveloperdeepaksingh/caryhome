@@ -9,7 +9,7 @@ try
         if (!res.ok) {
             throw new Error('Failed to fetch data');
         }   
-        const orderList = res.json();
+        const orderList = await res.json();
         return orderList;
     
     } catch (error) {

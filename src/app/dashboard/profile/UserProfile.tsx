@@ -1,9 +1,9 @@
 "use client";
-import React from "react";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import { useState, FormEvent } from "react";
 import { BASE_API_URL } from "../../../../utils/constant";
+import { useRouter } from "next/navigation";
 
 
 interface UserProfileProps{
@@ -23,6 +23,7 @@ interface IProfileType{
 
 const UserProfile :React.FC<UserProfileProps> = ({proData}) => {
 
+    const router = useRouter();
     const [image, setImage] = useState<File | null>(null);
     const [data, setData] = useState<IProfileType>({usrImage:proData.usrImage, usrAddress:proData.usrAddress});
 
@@ -91,14 +92,45 @@ const UserProfile :React.FC<UserProfileProps> = ({proData}) => {
         console.log(post);
     
         if (post.success === false) {
-            toast.error("Data saving failed!");
+            toast.error("Profile saving failed!");
         } else {
-            toast.success('Saved successfully!');
+            toast.success('Profile saved successfully!');
+            router.refresh();
          }
     } catch (error) {
         toast.error('Error saving data.');
     } 
     };
+
+    const handleRemoveImage = async (imageUrl:any) => {   
+        if(imageUrl){
+                const parts = imageUrl.split('/'); // Split the URL by slashes ('/')
+                const filename = parts.pop();  //and get the last part
+            try 
+            {
+                const public_id = filename.split('.')[0]; // Split the filename by periods ('.') and get the first part
+                const response = await fetch(`${BASE_API_URL}/api/removeimagefiles`, 
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ public_id }), // Send the file name to delete
+                });
+    
+                const result = await response.json();
+                
+                if(result.success === false){
+                    toast.error(`${result.msg}`);
+                }else{
+                    toast.success(`${result.msg}`);
+                    data.usrImage = '';
+                }      
+            } catch (error) {
+                console.error('Error deleting image:', error);
+            }
+            }
+        };
 
     return ( 
         <div>
@@ -108,8 +140,17 @@ const UserProfile :React.FC<UserProfileProps> = ({proData}) => {
                 </div>
                 <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-2 gap-9">
-                        <div className="w-auto border-[1.5px] border-gray-300 rounded-md">
-                            <Image alt="profile" src={proData.usrImage} width={550} height={350}/>
+                        <div className="relative">
+                            <div className="w-auto border-[1.5px] border-gray-300 rounded-md">
+                                <Image alt="profile" src={proData.usrImage} width={568} height={350}/>
+                            </div>
+                            <button 
+                                type="button" 
+                                className="btnRemove absolute bottom-[-8px] right-2"
+                                onClick={()=>handleRemoveImage(proData.usrImage)}
+                            >
+                                REMOVE
+                            </button>
                         </div>
                         <div className="flex flex-col gap-4">
                             <div className="flex flex-col gap-2">
@@ -117,7 +158,7 @@ const UserProfile :React.FC<UserProfileProps> = ({proData}) => {
                                 <textarea  name="usrAddress" value={data.usrAddress} onChange={handleChange} className="inputBox" ></textarea>
                             </div>
                             <div className="flex flex-col gap-2">
-                                <label className="font-semibold">Image:</label>
+                                <label className="font-semibold">Image:[Size: 568*350]</label>
                                 <div className="flex gap-1">
                                     <input type="file" name="usrImage" accept='image/*'  onChange={(e)=>handleChangeImage(e.target.files)} className="inputBox w-full" ></input>
                                     <button type="button" onClick={handleImageUpload} className="btnRight">Upload</button>

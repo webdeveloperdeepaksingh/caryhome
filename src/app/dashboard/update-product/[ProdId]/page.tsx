@@ -13,7 +13,7 @@ async function getCatList(){
             if (!res.ok) {
                 throw new Error('Failed to fetch data')
             }   
-            const catList = res.json();
+            const catList = await res.json();
             return catList;
     
         } catch (error) {

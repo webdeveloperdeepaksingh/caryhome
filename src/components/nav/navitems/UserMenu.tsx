@@ -3,7 +3,7 @@ import { RiFolderUserLine } from "react-icons/ri";
 import { RiFolderSettingsLine } from "react-icons/ri";
 import { PiPasswordFill } from "react-icons/pi";
 import { RiLogoutBoxRLine } from "react-icons/ri";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Avatar from "../../Avatar";
 import { MdDashboard } from "react-icons/md";
 import { AiFillCaretDown } from "react-icons/ai";
@@ -13,11 +13,16 @@ import toast from "react-hot-toast";
 import MenuItem from "./MenuItem";
 import Cookies from "js-cookie";
 import BackDrop from "./BackDrop";
+import { BASE_API_URL } from "../../../../utils/constant";
  
-
+type loggedInUserType = {
+    usrName:string,
+    usrImage:string,
+}
 
 const UserMenu = () => {
 
+    const [loggedInUserData, setLoggedInUserData] = useState<loggedInUserType>({usrName:'', usrImage:''});
     const [isToggleOn, setIsToggleOn] = useState(false);
     const router = useRouter();
 
@@ -28,6 +33,19 @@ const UserMenu = () => {
             usrRole:Cookies.get("loggedInUserRole"),
         }
     }; 
+
+    useEffect(()=>{
+        async function getLoggedInUser(){
+            try {
+                const res = await fetch(`${BASE_API_URL}/api/account/${loggedInUser.result?._id}`);
+                const userData = await res.json();
+                setLoggedInUserData(userData.accData) ;
+             } catch (error) {
+                console.error("Error fetching user data: ", error);
+            }
+        }
+        getLoggedInUser();
+    },[]);
 
     const toggleOn = useCallback(()=>{
         setIsToggleOn((prev)=>!prev);
@@ -51,7 +69,7 @@ const UserMenu = () => {
         <div>
             <div className="relative z-30">
                 <div onClick={toggleOn} className="p-2 border-[1.5px] border-indigo-800 flex flex-row items-center gap-1 rounded-full cursor-pointer hover:shadow-md transition text-slate-700">
-                    <Avatar src="/#" />
+                    <Avatar src={loggedInUserData.usrImage} />
                     <AiFillCaretDown/>
                 </div>
                 {

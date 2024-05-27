@@ -11,7 +11,9 @@ try
         if (!res.ok) {
             throw new Error('Failed to fetch prodData');
         }
-        return res.json();
+
+        const prodData = await res.json();
+        return prodData;
 
     } catch (error) {
         console.error("Error fetching prodData: ", error);

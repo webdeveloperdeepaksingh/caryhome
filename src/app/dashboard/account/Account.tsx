@@ -2,6 +2,7 @@
 import toast from "react-hot-toast";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { BASE_API_URL } from "../../../../utils/constant";
+import { useRouter } from "next/navigation";
 
 
 interface AccountProps{
@@ -28,7 +29,7 @@ interface IAccType{
 
 const Account:React.FC<AccountProps> = ({accData}) => {
 
-    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [data, setData] = useState<IAccType>({usrName: accData.usrName, usrEmail:accData.usrEmail, usrRole:accData.usrRole, usrPhone:accData.usrPhone});
 
@@ -40,7 +41,6 @@ const Account:React.FC<AccountProps> = ({accData}) => {
     
     const handleSubmit = async (e:FormEvent<HTMLFormElement>):Promise<void> => {
     e.preventDefault();
-    setIsLoading(true);
     setErrorMessage(''); // Clear the previous error
     let errMsg: string[] = [];
     
@@ -53,7 +53,6 @@ const Account:React.FC<AccountProps> = ({accData}) => {
     
     if (errMsg.length > 0) {
         setErrorMessage(errMsg.join(' || '));
-        setIsLoading(false); // Set isLoading to false here
         return;
     }
     
@@ -75,19 +74,14 @@ const Account:React.FC<AccountProps> = ({accData}) => {
         console.log(post);
     
         if (post.success === false) {
-            if (Array.isArray(post.message)) {
-                setErrorMessage(post.message.join(' || '));
-            } else {
-                setErrorMessage(post.message);
-            }
+            toast.error('Account saving failed!');
         } else {
-            toast.success('Data saved successfully!');
+            toast.success('Account saved successfully!');
+            router.refresh();
          }
     } catch (error) {
         toast.error('Error saving data.');
-    } finally {
-        setIsLoading(false);
-      }
+    } 
     };
 
     return ( 

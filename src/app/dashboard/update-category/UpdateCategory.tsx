@@ -3,7 +3,7 @@ import { BASE_API_URL } from "../../../../utils/constant";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 
 interface UpdateCategoryProps {
     catData: CatType;
@@ -18,7 +18,6 @@ type CatType = {
 const UpdateCategory: React.FC<UpdateCategoryProps> = ({catData}) => {
 
     const router = useRouter();
-    const [isLoading, setIsLoading] = useState(false);
     const [image, setImage] = useState<File | null>(null);
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [data, setData] = useState({catName: catData.catName, catImage: catData.catImage});
@@ -28,6 +27,10 @@ const UpdateCategory: React.FC<UpdateCategoryProps> = ({catData}) => {
         setData((prevData) => ({ ...prevData, [name]: value }));
         console.log(data);
     };
+
+    useEffect(()=>{
+        router.refresh();
+    },[])
 
     const handleImageChange = (imgFile:any) => {
         if(imgFile){
@@ -102,7 +105,6 @@ const UpdateCategory: React.FC<UpdateCategoryProps> = ({catData}) => {
     
     const handleSubmit = async (e:FormEvent<HTMLFormElement>):Promise<void> => {
     e.preventDefault();
-    setIsLoading(true);
     setErrorMessage(''); // Clear the previous error
     let errMsg: string[] = [];
     
@@ -112,33 +114,27 @@ const UpdateCategory: React.FC<UpdateCategoryProps> = ({catData}) => {
     
     if (errMsg.length > 0) {
         setErrorMessage(errMsg.join(' || '));
-        setIsLoading(false); // Set isLoading to false here
         return;
     }
     
-    try {
+    try 
+    {
         const response = await fetch(`${BASE_API_URL}/api/category/${catData._id}`, {
-        method: 'PUT',
-        body: JSON.stringify({ catName: data.catName, catImage: data.catImage }),
+            method: 'PUT',
+            body: JSON.stringify({ catName: data.catName, catImage: data.catImage }),
         });
     
         const post = await response.json();
         console.log(post);
     
         if (post.success === false) {
-            if (Array.isArray(post.message)) {
-                setErrorMessage(post.message.join(' || '));
-            } else {
-                setErrorMessage(post.message);
-            }
+            toast.error('Category updation failed!');
         } else {
             toast.success('Category updated successfully!');
          }
     } catch (error) {
         toast.error('Error updating category.');
-    } finally {
-        setIsLoading(false);
-      }
+    } 
     };      
 
     return ( 

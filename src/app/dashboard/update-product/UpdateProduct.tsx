@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Checkbox } from "@mui/material";
 import toast from "react-hot-toast";
 import { BASE_API_URL } from "../../../../utils/constant";
@@ -33,10 +33,8 @@ export type ProdType = {
 
 const UpdateProduct:React.FC<UpdateProductProps> =  ({categoryList, prodById}) => {
 
-    console.log(prodById);
     const router = useRouter();
     const [color, setColor] = useState<string[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [data, setData] = useState(
         {
@@ -59,6 +57,10 @@ const UpdateProduct:React.FC<UpdateProductProps> =  ({categoryList, prodById}) =
         console.log(data);
     };
 
+    useEffect(()=>{
+        router.refresh();
+    },[])
+
     const handleSetColor = (data:string) => {
         if(color.includes(data)){
             setColor(color.filter((clr:any) => clr != data));
@@ -70,7 +72,6 @@ const UpdateProduct:React.FC<UpdateProductProps> =  ({categoryList, prodById}) =
 
     const handleSubmit = async (e:FormEvent<HTMLFormElement>):Promise<void> => {
         e.preventDefault();
-        setIsLoading(true);
         setErrorMessage(''); // Clear the previous error
         let errMsg: string[] = [];
         
@@ -89,7 +90,6 @@ const UpdateProduct:React.FC<UpdateProductProps> =  ({categoryList, prodById}) =
         
         if (errMsg.length > 0) {
             setErrorMessage(errMsg.join(' || '));
-            setIsLoading(false); // Set isLoading to false here
             return;
         }
         
@@ -117,20 +117,14 @@ const UpdateProduct:React.FC<UpdateProductProps> =  ({categoryList, prodById}) =
             console.log(post);
         
             if (post.success === false) {
-                if (Array.isArray(post.message)) {
-                    setErrorMessage(post.message.join(' || '));
-                } else {
-                    setErrorMessage(post.message);
-                }
+                toast.success('Product updation failed!');
             } else {
                 toast.success('Product updated successfully!');
                 router.push('/dashboard/products');
             }
         } catch (error) {
             toast.error('Product updation failed.');
-        } finally {
-            setIsLoading(false);
-          }
+        } 
         };  
 
         const handleRemoveImage = async (imageUrl:any) => {   

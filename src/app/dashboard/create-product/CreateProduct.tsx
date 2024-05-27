@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Checkbox } from "@mui/material";
 import toast from "react-hot-toast";
 import { BASE_API_URL } from "../../../../utils/constant";
+import { useRouter } from "next/navigation";
      
 interface CreateProductProps {
     categoryList: CatType[];
@@ -32,7 +33,7 @@ interface IProductType  {
 const CreateProduct:React.FC<CreateProductProps> =  ({categoryList}) => {
 
     const [color, setColor] = useState<string[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
     const [inStock, setInStock] = useState<boolean>(false);
     const [image, setImage] = useState<File[] | null>(null);
     const [imgUrl, setImgUrl] = useState<string[]> ([]);
@@ -124,8 +125,8 @@ const CreateProduct:React.FC<CreateProductProps> =  ({categoryList}) => {
 
     const handleSubmit = async (e:any):Promise<void> => {
         e.preventDefault();
-        setIsLoading(true);
         setErrorMessage(''); // Clear the previous error
+
         let errMsg: string[] = [];
         
         if (!data.prodName.trim()) {
@@ -143,7 +144,6 @@ const CreateProduct:React.FC<CreateProductProps> =  ({categoryList}) => {
         
         if (errMsg.length > 0) {
             setErrorMessage(errMsg.join(' || '));
-            setIsLoading(false); // Set isLoading to false here
             return;
         }
         
@@ -171,11 +171,7 @@ const CreateProduct:React.FC<CreateProductProps> =  ({categoryList}) => {
             console.log(post);
         
             if (post.success === false) {
-            if (Array.isArray(post.message)) {
-                setErrorMessage(post.message.join(' || '));
-            } else {
-                setErrorMessage(post.message);
-            }
+                toast.error('Product creation failed!');
             } else {
                 toast.success('Product created successfully!');
                 setData(
@@ -191,12 +187,11 @@ const CreateProduct:React.FC<CreateProductProps> =  ({categoryList}) => {
                         prodImage:[] 
                     }
                 ); //clear the prev input data.
+                router.push('/dashboard/products');
              }
         } catch (error) {
             toast.error('Product creation failed.');
-        } finally {
-            setIsLoading(false);
-          }
+        } 
         };  
     return ( 
         <div>
