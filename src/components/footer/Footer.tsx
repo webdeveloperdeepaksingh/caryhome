@@ -6,6 +6,7 @@ import Link from "next/link";
 import { AiFillInstagram, AiFillTwitterCircle, AiFillYoutube } from "react-icons/ai";
 
 function Footer() {
+
   return (
     <footer className="bg-indigo-800 text-white mt-16 p-6 md:p-0">
         <Container>
@@ -58,4 +59,4 @@ function Footer() {
   )
 }
 
-export default Footer
+export default Footer;

@@ -4,7 +4,7 @@ import ProductDetails from "../ProductDetails";
 import { IProdParams } from "@/app/dashboard/update-product/[ProdId]/page";
 import { BASE_API_URL } from "../../../../utils/constant";
 import Footer from "@/components/footer/Footer";
-
+ 
 
 async function getProductById(id:IProdParams){
     
@@ -31,10 +31,17 @@ const MainProductLandingPage = async ({params}: {params:IProdParams}) => {
 
     return ( 
         <div>
-            <ProductDetails prodById={prodById.productById}/>
-            <div className="flex flex-col gap-4 mt-20">
-                <AddRating prodById={prodById.productById} />
-                <ListRating prodById={prodById.productById}/>
+            <div className="flex flex-col">
+                <div>
+                    <ProductDetails prodById={prodById.productById}/>
+                </div>           
+                <div className="flex flex-col gap-4 mt-20">
+                    <AddRating prodById={prodById.productById} />
+                    <ListRating prodById={prodById.productById}/>
+                </div>
+                <div>
+                    <Footer/>
+                </div>
             </div>
         </div>
      );
