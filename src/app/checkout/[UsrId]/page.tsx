@@ -21,7 +21,7 @@ interface CheckoutProps {
     usrAddress:string;
 }
 
-export default function Checkout({params}:{params:IAccountParams}){
+function Checkout({params}:{params:IAccountParams}){
 
     const [data, setData] = useState<CheckoutProps>({usrAddress:''});
     const [errorMessage, setErrorMessage] = useState<string>("");
@@ -116,3 +116,5 @@ export default function Checkout({params}:{params:IAccountParams}){
         </div>
      );
 }
+
+export default Checkout;
