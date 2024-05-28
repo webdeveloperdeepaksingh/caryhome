@@ -33,7 +33,9 @@ const Success = () => {
   )
 }
 
-export default function PaymentSuccess() {
+export default Success;
+
+export const PaymentSuccess = () => {
     return (
       <Suspense fallback={<div><Loading /></div>}>
         <Success />

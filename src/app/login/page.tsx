@@ -15,7 +15,7 @@ type LoginType = {
     usrPass: string;
 }
 
-export default function LoginPage(){
+function LoginPage(){
 
     const urlSearchParams = useSearchParams();    
     const navigate = urlSearchParams.get('navigate');
@@ -125,10 +125,14 @@ export default function LoginPage(){
      );
 }
 
-export const  Login = () =>{
-    return (
-      <Suspense fallback={<div><Loading /></div>}>
-        <LoginPage />
-      </Suspense>
-    );
-}
+export default LoginPage;
+
+export const Login = () => {
+  return (
+    <Suspense fallback={<Loading />}>
+      <LoginPage />
+    </Suspense>
+  );
+};
+
+
