@@ -91,7 +91,7 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({prodById}) => {
            <Container>
                 <div className="grid grid-cols-1 md:grid-cols-2 h-auto mt-8 p-6 md:p-0">
                     <div className="">
-                        <ProductImage prodById={prodById} cartItem={cartItem} handleSelectColor={handleSelectColor}/>
+                        <ProductImage prodById={prodById} cartItem={cartItem}/>
                     </div>
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-col border-b-2 gap-3 py-3">
