@@ -1,8 +1,12 @@
 import Categories from "../../../../models/Categories"; 
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "../../../../dbConnect";
-import { CatType } from "@/components/categories/CategoryItems";
  
+type CatType = {
+  _id?: string;
+  catName:string;
+  catImage: string | null;
+}
 
 export async function GET(req:NextRequest){
 

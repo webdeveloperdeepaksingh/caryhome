@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import Orders from "../../../../models/Order";
 import dbConnect from "../../../../dbConnect";
-import { OrderType } from "../myorder/[UsrId]/route";
 
-
-
+interface OrderType  {
+    usrId: string,
+    usrProducts:string[],
+    razorpay_order_id: string,
+    razorpay_payment_id: string,
+    orderAmount:string
+}
 
 export async function GET(req:NextRequest){
 

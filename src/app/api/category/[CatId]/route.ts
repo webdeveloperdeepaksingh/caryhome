@@ -1,10 +1,15 @@
 import { NextResponse, NextRequest } from "next/server";
 import Categories from "../../../../../models/Categories";
-import { CatType } from "@/components/categories/CategoryItems";
 import dbConnect from "../../../../../dbConnect";
 
 interface ICatParams{
     CatId?: string;
+}
+
+type CatType = {
+  _id?: string;
+  catName:string;
+  catImage: string | null;
 }
 
 export async function GET(req:NextRequest, {params}:{params:ICatParams}){
