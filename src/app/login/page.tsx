@@ -9,7 +9,6 @@ import Container from "@/components/Container";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { Suspense, useState } from "react";
-import Loading from "./Loading";
  
 interface LoginType {
     usrName: string;
@@ -127,13 +126,5 @@ const LoginPage : NextPage = () => {
 }
 
 export default LoginPage;
-
-export const Login = () => {
-  return (
-    <Suspense fallback={<Loading />}>
-      <LoginPage />
-    </Suspense>
-  );
-};
 
 
