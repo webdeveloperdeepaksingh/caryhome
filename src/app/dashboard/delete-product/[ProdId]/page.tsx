@@ -1,13 +1,16 @@
 "use client";
+import { NextPage } from "next";
 import { BASE_API_URL } from "../../../../../utils/constant";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 interface DelProdParams{
-    ProdId:string;
+    params: {
+        ProdId:string;
+    };
 }
 
-const DeleteProduct = ({params}:{params: DelProdParams}): JSX.Element  => {
+const DeleteProduct : NextPage <DelProdParams> = ({params}): JSX.Element  => {
     
     const router = useRouter();
     const handleDelProd  = async ():Promise<void> => {

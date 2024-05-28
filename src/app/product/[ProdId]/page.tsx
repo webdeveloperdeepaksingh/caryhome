@@ -24,7 +24,7 @@ async function getProductById(id:IProdParams){
     }
 };
 
-const MainProductLandingPage = async ({params}: {params:IProdParams}) => {
+const ProductLandingPage = async ({params}: {params:IProdParams}) => {
 
     if(!BASE_API_URL){
         return null;
@@ -49,4 +49,4 @@ const MainProductLandingPage = async ({params}: {params:IProdParams}) => {
      );
 }
  
-export default MainProductLandingPage;
+export default ProductLandingPage;

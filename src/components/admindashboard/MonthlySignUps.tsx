@@ -5,7 +5,7 @@ import Loading from "./Loading";
 import { FaUser } from "react-icons/fa6";
 
 
-const MonthlySignUps = () => {
+const MonthlySignUps : React.FC = () => {
 
     const [totalSignUps, setTotalSignUps] = useState([]);
     const [isLoading, setIsLoading] = useState(true);

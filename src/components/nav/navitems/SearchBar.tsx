@@ -8,12 +8,11 @@ interface ISearcBar {
     prodName: string;
 }
 
-const SearchBar = () => {
+const SearchBar : React.FC = () => {
 
     const [searchTerm, setSearchTerm] = useState<ISearcBar>({prodName:""});
-    //const [item, setItem] = useState<string[] | null>([]);
     const dispatch = useDispatch();
-
+    
     const handleChange = (e:any) => {
         const name = e.target.name;
         const value = e.target.value;

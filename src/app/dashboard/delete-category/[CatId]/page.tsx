@@ -1,13 +1,16 @@
 "use client";
+import { NextPage } from "next";
 import { BASE_API_URL } from "../../../../../utils/constant";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 interface DelCatParams{
-    CatId:string;
+    params : {
+        CatId:string;
+    };
 }
 
-const DeleteCategory = ({params}:{params: DelCatParams}): JSX.Element  => {
+const DeleteCategory : NextPage <DelCatParams> = ({params}): JSX.Element  => {
     
     const router = useRouter();
     const handleDelCat  = async ():Promise<void> => {

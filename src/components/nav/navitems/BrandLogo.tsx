@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-const BrandLogo = () => {
+const BrandLogo : React.FC = () => {
     return ( 
         <div className="border-r-[1.5px] border-indigo-800 pr-5">     
             <Link href="/">
@@ -11,5 +11,4 @@ const BrandLogo = () => {
         </div>
      );
 }
- 
 export default BrandLogo;

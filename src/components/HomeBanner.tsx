@@ -2,7 +2,8 @@
 import Image from "next/image";
 import Container from "./Container";
 
-const HomeBanner = () => {
+const HomeBanner : React.FC = () => {
+
     return ( 
         <div>
             <Container>

@@ -6,18 +6,21 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Checkbox } from "@mui/material";
 import Loading from "./Loading";
+import { NextPage } from "next";
 
-type CatType = {
+interface CatType  {
     _id?: string,
     catName: string,
     catImage?: string | null, 
 }
 
 interface IProdParams {
-    ProdId?: string;
+    params : {
+        ProdId?: string;
+    };
 }
 
-type ProductType = {
+interface ProductType  {
     prodName: string;
     prodSlug?: string;
     prodTags?: any;
@@ -30,7 +33,7 @@ type ProductType = {
     prodReviews?: string[] | null;
  }
 
-export default function UpdateProduct({params} : {params:IProdParams}){
+const UpdateProduct : NextPage <IProdParams> = ({params}) => {
 
     const router = useRouter();
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -379,3 +382,4 @@ export default function UpdateProduct({params} : {params:IProdParams}){
         </div>
      );
 }
+export default UpdateProduct;

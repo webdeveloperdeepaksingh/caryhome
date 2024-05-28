@@ -5,7 +5,7 @@ import BrandLogo from "./BrandLogo";
 import SearchBar from "./SearchBar";
 import UserMenu from "./UserMenu";
  
-const NavBar =  () => {
+const NavBar : React.FC =  () => {
 
      
     return ( 

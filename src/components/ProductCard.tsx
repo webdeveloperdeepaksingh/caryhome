@@ -2,12 +2,11 @@
 import Image from "next/image";
 import { truncateText } from "../../utils/truncateText";
 import { formatPrice } from "../../utils/formatPrice";
-import { ProdType } from "@/app/dashboard/update-product/UpdateProduct";
 import { useRouter } from "next/navigation";
 import { Rating } from "@mui/material";
 
 interface ProductCardProps {
-    data: ProdType[];
+    data: any;
 }
 
 const ProductCard :React.FC<ProductCardProps> = ({data}) => {

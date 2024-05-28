@@ -1,14 +1,14 @@
 "use client";
+import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { BASE_API_URL } from "../../../../utils/constant";
 import Link from "next/link";
 import { FaEdit } from "react-icons/fa";
 import { formatPrice } from "../../../../utils/formatPrice";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import Loading from "./Loading";
  
-
-
-type ProductType = {
+interface ProductType  {
     _id?:string;
     prodName: string;
     prodSlug?: string;
@@ -22,7 +22,7 @@ type ProductType = {
     prodImage?: string[] | null;
 }
 
-export default function Products() {
+const Products : NextPage = () => {
 
     const [data, setData] = useState<ProductType[] | null>();
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -75,6 +75,12 @@ export default function Products() {
         setSearchTerm(val);
     }
 
+    if(isLoading){
+        return <div>
+            <Loading/>
+        </div>
+    }
+
     return ( 
         <div>
             <title>PRODUCTS</title>
@@ -114,10 +120,10 @@ export default function Products() {
                                 <td className='py-2 px-4'>{formatPrice(item.prodPrice)}</td>
                                 <td className='flex py-2 text-lg gap-6 px-4'>
                                     <Link href={`/dashboard/update-product/${item._id}`}>
-                                    <FaEdit />
+                                        <FaEdit />
                                     </Link>
                                     <Link href={`/dashboard/delete-product/${item._id}`}>
-                                    <RiDeleteBin5Fill />
+                                        <RiDeleteBin5Fill />
                                     </Link>
                                 </td>
                                 </tr>
@@ -129,10 +135,10 @@ export default function Products() {
                                 <td className='py-2 px-4'>{formatPrice(item.prodPrice)}</td>
                                 <td className='flex py-2 text-lg gap-6 px-4'>
                                     <Link href={`/dashboard/update-product/${item._id}`}>
-                                    <FaEdit />
+                                        <FaEdit />
                                     </Link>
                                     <Link href={`/dashboard/delete-product/${item._id}`}>
-                                    <RiDeleteBin5Fill />
+                                        <RiDeleteBin5Fill />
                                     </Link>
                                 </td>
                                 </tr>
@@ -144,3 +150,4 @@ export default function Products() {
         </div>
      );
 }
+export default Products;

@@ -6,7 +6,7 @@ import { formatPrice } from "../../../utils/formatPrice";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 
 
-const MonthlySales = () => {
+const MonthlySales : React.FC = () => {
 
     const [revenue, setRevenue] = useState([]);
     const [isLoading, setIsLoading] = useState(true);

@@ -5,18 +5,20 @@ import { useRouter } from "next/navigation";
 import { BASE_API_URL } from "../../../../../utils/constant";
 import { FormEvent, useEffect, useState } from "react";
 import Loading from "./Loading";
-
+import { NextPage } from "next";
+import { profile } from "console";
 
 interface IUserProfileParams {
-    UsrId?: string;
+    params: {
+        UsrId?: string;
+    };
 }
-
-type ProfileType = {
+interface ProfileType  {
     usrAddress:string;
     usrImage:string;
 }
 
-export default function UserProfile({params}:{params:IUserProfileParams}){
+const UserProfile : NextPage <IUserProfileParams> = ({params}) => {
 
     const router = useRouter();
     const [image, setImage] = useState<File | null>(null);
@@ -198,3 +200,4 @@ export default function UserProfile({params}:{params:IUserProfileParams}){
         </div>
     );
 }
+export default UserProfile;

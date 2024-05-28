@@ -12,7 +12,7 @@ ChartJS.register(
     PointElement    
  );
 
-const WeeklySalesChart = () => {
+const WeeklySalesChart : React.FC = () => {
 
     const [revenue, setRevenue] = useState<number[]>([]);
     const [revenueLabel, setRevenueLabel] = useState<string[]>([]);

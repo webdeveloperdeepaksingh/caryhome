@@ -6,22 +6,17 @@ import { useEffect, useState } from "react";
 import Container from "@/components/Container";
 import FormWrap from "@/components/FormWrap";
 import Loading from "./Loading";
-
-
+import { NextPage } from "next";
 interface IAccountParams {
-    UsrId?: string;
+    params : {
+        UsrId?: string;
+    };
 }
-
-type StoreType = {
-    store: unknown
-    cart:any;
-}
-
 interface CheckoutProps {
     usrAddress:string;
 }
 
-function Checkout({params}:{params:IAccountParams}){
+const Checkout : NextPage <IAccountParams> = ({params}) => {
 
     const [data, setData] = useState<CheckoutProps>({usrAddress:''});
     const [errorMessage, setErrorMessage] = useState<string>("");

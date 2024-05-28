@@ -4,19 +4,22 @@ import { BASE_API_URL } from "../../../../../utils/constant";
 import { useRouter } from "next/navigation";
 import Loading from "./Loading";
 import toast from "react-hot-toast";
+import { NextPage } from "next";
 
 interface ISettingParams {
-    SettId?: string;
+    params : {
+        SettId?: string;
+    };
 }
 
-type SettType = {
+interface SettType {
     _id?: string;
     webTitle: string;
     webTags: string[];
     metaData: string;
 }
     
-export default function Settings ({params}:{params : ISettingParams}) {
+const Settings : NextPage <ISettingParams> = ({params}) => {
 
     const router = useRouter();
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -109,5 +112,6 @@ export default function Settings ({params}:{params : ISettingParams}) {
         </div>
      );
 }
+export default Settings;
  
  

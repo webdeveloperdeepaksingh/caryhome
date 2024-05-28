@@ -5,8 +5,9 @@ import SalesChart from "@/components/admindashboard/SalesChart";
 import { useState, useEffect } from "react";
 import Loading from "./Loading";
 import Cookies from "js-cookie";
+import { NextPage } from "next";
  
-const Home = () => {
+const Home : NextPage  = () => {
 
     const [isLoading, setIsloading] = useState(true);
     const loggedInUser = {

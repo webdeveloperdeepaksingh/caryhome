@@ -11,7 +11,7 @@ import { RiListSettingsFill } from "react-icons/ri";
 import { PiShoppingBagOpenFill } from "react-icons/pi";
 import { useEffect, useState } from "react";
  
-const SideBar = () => {
+const SideBar : React.FC = () => {
 
     const [isLoading, setIsloading] = useState(true);
     const currentPath = usePathname();

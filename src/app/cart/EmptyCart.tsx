@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 const EmptyCart = () => {
 
     const router = useRouter();
-
     return ( 
         <div>           
             <div className="flex flex-col items-center h-screen">

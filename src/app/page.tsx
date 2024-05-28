@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import HomeBanner from "@/components/HomeBanner";
-import Categories from "@/components/categories/page";
+import ItemListByCategory from '@/components/ItemListByCategory';
 import Footer from '@/components/footer/Footer';
-
 
 export const metadata: Metadata = {
   title: 'Carry Home | Electronic Online Shop',
@@ -13,14 +12,15 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default function Home() {
+const Home = () => {
   return (
     <div >
        <HomeBanner/>
-       <Categories/>
+       <ItemListByCategory/>
        <div className='mt-9'>
           <Footer/>
        </div>
     </div>
   )
 }
+export default Home;

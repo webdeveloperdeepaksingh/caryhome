@@ -5,7 +5,7 @@ import FooterList from "./FooterList";
 import Link from "next/link";
 import { AiFillInstagram, AiFillTwitterCircle, AiFillYoutube } from "react-icons/ai";
 
-function Footer() {
+const Footer : React.FC = () => {
 
   return (
     <footer className="bg-indigo-800 text-white mt-16 p-6 md:p-0">
@@ -58,5 +58,4 @@ function Footer() {
     </footer>
   )
 }
-
 export default Footer;

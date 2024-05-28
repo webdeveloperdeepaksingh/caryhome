@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import React, { useState } from 'react';
 import { BASE_API_URL } from '../../../../utils/constant';
+import { NextPage } from 'next';
 
 interface IResetPass {
     usrPass: string;
@@ -10,10 +11,12 @@ interface IResetPass {
 }
 
 interface IResetPassParams {
-    Token:string;
+    params : {
+        Token:string;
+    };
 }
 
-const ResetPassword = ({ params }: { params: IResetPassParams }) => {
+const ResetPassword : NextPage <IResetPassParams> = ({ params }) => {
 
 const [resetPwd, setResetPwd] = useState<IResetPass>({usrPass:'', confPass:''});
 const [errorMessage, setErrorMessage] = useState('');

@@ -23,7 +23,7 @@ type StoreType = {
     cart:any;
 }
 
-const ShoppingCart = () => {
+const ShoppingCart : React.FC = () => {
 
     const router = useRouter();
     const dispatch = useDispatch();

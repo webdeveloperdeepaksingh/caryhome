@@ -2,7 +2,7 @@ import SignUp from "./SignUp";
 import Container from "@/components/Container"; 
 
 
-const SignUpForm = async () => {
+const SignUpForm = () => {
 
     return ( 
         <div>

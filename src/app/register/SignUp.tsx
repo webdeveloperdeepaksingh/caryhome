@@ -5,23 +5,19 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { AiOutlineGoogle } from "react-icons/ai";
-
-
-type SignUpType = {
+ 
+interface SignUpType  {
     usrName:string, 
     usrEmail:string, 
     usrPass:string, 
     confPass:string,
 }
 
-
-const SignUp  = () => {
+const SignUp : React.FC  = () => {
 
     const router = useRouter();
     const [data, setData] = useState<SignUpType>({usrName:'', usrEmail:'', usrPass:'', confPass:''});
     const [errorMessage, setErrorMessage] = useState('');
-
-
 
     const handleChange = (e:any) => {
         const name = e.target.name;

@@ -6,16 +6,19 @@ import toast from "react-hot-toast";
 import Image from "next/image";
 import Link from "next/link";
 import Loading from "./Loading";
+import { NextPage } from "next";
 interface ICatParams {
-    CatId?: string;
+    params : {
+        CatId?: string;
+    };
 }
 
-type CatType = {
+interface CatType  {
     catName: string;
     catImage: string | null;
 } 
 
-export default function UpdateCategory ({ params }: { params: ICatParams }){
+const UpdateCategory : NextPage <ICatParams> = ({ params }) => {
 
     const router = useRouter();
     const [image, setImage] = useState<File | null>(null);
@@ -193,3 +196,4 @@ export default function UpdateCategory ({ params }: { params: ICatParams }){
         </div>
     );
 };
+export default UpdateCategory;

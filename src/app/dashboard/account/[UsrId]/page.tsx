@@ -1,4 +1,5 @@
 "use client";
+import { NextPage } from "next";
 import toast from "react-hot-toast";
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { BASE_API_URL } from "../../../../../utils/constant";
@@ -7,7 +8,9 @@ import Loading from "./Loading";
 
 
  interface IAccountParams {
-    UsrId?: string;
+    params : {
+        UsrId?: string;
+    };
 }
 
 type AccType = {
@@ -18,7 +21,7 @@ type AccType = {
     usrPhone: string;
 }
 
-export default function Account({params}:{params:IAccountParams}){
+const Account : NextPage <IAccountParams> = ({params}) => {
 
 
     const router = useRouter();
@@ -137,6 +140,6 @@ export default function Account({params}:{params:IAccountParams}){
         </div>
      );
 }
-
+export default Account;
 
   

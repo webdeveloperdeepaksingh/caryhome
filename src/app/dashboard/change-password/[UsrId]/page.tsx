@@ -1,9 +1,12 @@
 "use client";
 import toast from "react-hot-toast";
 import { BASE_API_URL } from "../../../../../utils/constant";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
+import { NextPage } from "next";
 interface IAccountParams {
-    UsrId?: string;
+    params : {
+        UsrId?: string;
+    };
 }
 
 type IChangePasswordType = {
@@ -12,7 +15,7 @@ type IChangePasswordType = {
     confPass: string;
 }
 
-export default function ChangePassword({params}:{params:IAccountParams}){
+const ChangePassword : NextPage<IAccountParams> = ({params}) => {
 
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [data, setData] = useState<IChangePasswordType>({usrPass: "", newPass:"", confPass:""});
@@ -101,7 +104,4 @@ export default function ChangePassword({params}:{params:IAccountParams}){
         </div>
      );
 }
-
-function setIsLoading(arg0: boolean) {
-    throw new Error("Function not implemented.");
-}
+export default ChangePassword;

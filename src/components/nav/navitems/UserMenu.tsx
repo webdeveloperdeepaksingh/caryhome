@@ -20,7 +20,7 @@ type loggedInUserType = {
     usrImage:string,
 }
 
-const UserMenu = () => {
+const UserMenu : React.FC = () => {
 
     const [loggedInUserData, setLoggedInUserData] = useState<loggedInUserType>({usrName:'', usrImage:''});
     const [isToggleOn, setIsToggleOn] = useState(false);

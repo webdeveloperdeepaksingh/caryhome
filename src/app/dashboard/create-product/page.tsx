@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BASE_API_URL } from "../../../../utils/constant";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Checkbox } from "@mui/material";
+import { NextPage } from "next";
 
 type CatType = {
     _id?: string,
@@ -13,7 +13,7 @@ type CatType = {
     catImage?: string | null, 
 }
 
-type ProductType = {
+interface ProductType  {
     _id?:string;
     prodName: string;
     prodSlug?: string;
@@ -27,7 +27,7 @@ type ProductType = {
     prodReviews?: string[] | null;
  }
 
-export default function CreateProduct(){
+const CreateProduct : NextPage = () => {
 
     const router = useRouter();
     const [cat, setCat] = useState<CatType[] | null>([]);
@@ -312,3 +312,4 @@ export default function CreateProduct(){
         </div>
      );
 }
+export default CreateProduct;

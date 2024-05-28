@@ -5,10 +5,9 @@ import Image from "next/image";
 interface ProductImageProps {
     cartItem:CartItemType,
     prodById: any,
-    handleSelectColor: (col: string) => void;
-}
+ }
 
-const ProductImage: React.FC<ProductImageProps> = ({prodById, cartItem, handleSelectColor}) => {
+const ProductImage: React.FC<ProductImageProps> = ({prodById}) => {
 
     const imageList:string[] = prodById.prodImage;
     const [selectImage, setSelectImage] = useState<string>(prodById.prodImage?.[0]);
@@ -22,7 +21,7 @@ const ProductImage: React.FC<ProductImageProps> = ({prodById, cartItem, handleSe
             <div className="flex gap-6 w-full">
                 <div className="flex flex-col border-[1.5px] border-gray-300 gap-3 w-[100px] rounded-md p-3 h-auto">
                     {
-                        imageList?.map((img:any, index:number)=>{
+                        imageList?.map((img:any)=>{
                             return(
                                 <div 
                                     key={img.prodImage} 

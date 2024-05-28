@@ -3,13 +3,14 @@ import { BASE_API_URL } from "../../../../utils/constant";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState, ChangeEvent, FormEvent } from "react";
+import { NextPage } from "next";
 
 
-type CreateCategoryProps = {
+interface CreateCategoryProps  {
     catName: string;
 }
 
-export default function CreateCategory(){
+const CreateCategory : NextPage = () => {
 
     const router = useRouter();
     const [errorMessage, setErrorMessage] = useState<string>('');
@@ -73,3 +74,4 @@ export default function CreateCategory(){
         </div>
      );
 }
+export default CreateCategory;

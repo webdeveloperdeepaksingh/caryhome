@@ -1,4 +1,5 @@
 "use client";
+import { NextPage } from "next";
 import { BASE_API_URL } from "../../../utils/constant";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -10,12 +11,12 @@ import toast from "react-hot-toast";
 import { Suspense, useState } from "react";
 import Loading from "./Loading";
  
-type LoginType = {
+interface LoginType {
     usrName: string;
     usrPass: string;
 }
 
-function LoginPage(){
+const LoginPage : NextPage = () => {
 
     const urlSearchParams = useSearchParams();    
     const navigate = urlSearchParams.get('navigate');

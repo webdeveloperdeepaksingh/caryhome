@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import { BASE_API_URL } from "../../../../utils/constant";
 import { formatPrice } from "../../../../utils/formatPrice";
 import Loading from "./Loading";
+import { NextPage } from "next";
  
-type OrderType = {
+interface OrderType  {
     usrId: string,
     usrProducts:string[],
     razorpay_order_id: string,
@@ -12,7 +13,7 @@ type OrderType = {
     orderAmount:string
 }
 
-export default function Orders(){
+const Orders : NextPage = () => {
 
     const [data, setData] = useState<OrderType[] | null>();
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -137,3 +138,4 @@ export default function Orders(){
         </div>
      );
 }
+export default Orders;

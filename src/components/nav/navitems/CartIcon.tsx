@@ -10,7 +10,7 @@ type StoreType = {
     cart:any;
 }
 
-const CartIcon = () => {
+const CartIcon : React.FC = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const cartItems = useSelector((store: StoreType) => store.cart);

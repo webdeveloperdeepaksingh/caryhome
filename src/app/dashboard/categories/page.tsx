@@ -7,14 +7,15 @@ import Link from "next/link";
 import Loading from "./Loading";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import { NextPage } from "next";
 
-type CatType = {
+interface CatType  {
     _id?: string,
     catName: string,
     catImage?: string | null, 
 }
 
-export default function Categories(){
+const Categories : NextPage = () => {
      
     const router = useRouter();
     const [data, setData] = useState<CatType[] | null>([]);
@@ -87,3 +88,4 @@ export default function Categories(){
         </div>
      );
 }
+export default Categories;
