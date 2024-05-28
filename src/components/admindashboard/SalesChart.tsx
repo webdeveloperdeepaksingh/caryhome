@@ -16,7 +16,7 @@ const WeeklySalesChart = () => {
 
     const [revenue, setRevenue] = useState<number[]>([]);
     const [revenueLabel, setRevenueLabel] = useState<string[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(()=>{
     async function fetchRevenue(){

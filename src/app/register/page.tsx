@@ -4,7 +4,6 @@ import Container from "@/components/Container";
 
 const SignUpForm = async () => {
 
- 
     return ( 
         <div>
             <Container>

@@ -87,7 +87,9 @@ const SignUp  = () => {
       }
 
     return ( 
-        <div className="p-6 md:p-0">
+        <div>
+            <title>SIGNUP</title>
+            <div className="p-6 md:p-0">
             <form className="flex flex-col max-w-[500px] p-9 gap-3 shadow-lg rounded-md border-[1.5px] border-indigo-800" onSubmit={handleSubmit}>
                 <div className="flex flex-col">
                     <label htmlFor="usrName" className="text-sm mb-2">Username:*</label>
@@ -121,6 +123,7 @@ const SignUp  = () => {
                     </Link>
                 </p>
             </form>
+          </div>
         </div>
      );
 }

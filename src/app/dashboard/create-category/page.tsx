@@ -5,11 +5,11 @@ import toast from "react-hot-toast";
 import { useState, ChangeEvent, FormEvent } from "react";
 
 
-interface CreateCategoryProps {
+type CreateCategoryProps = {
     catName: string;
 }
 
-const CreateCategory: React.FC = () => {
+export default function CreateCategory(){
 
     const router = useRouter();
     const [errorMessage, setErrorMessage] = useState<string>('');
@@ -73,5 +73,3 @@ const CreateCategory: React.FC = () => {
         </div>
      );
 }
- 
-export default CreateCategory;

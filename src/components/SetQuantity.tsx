@@ -11,11 +11,6 @@ const SetQuantity: React.FC<SetQuantityProps> = ({countCart, cartItem, handleInc
 
     return ( 
     <div className=" flex gap-8 items-center">
-        {/* {countCart? null 
-        : <div className="font-bold text-sm py-2">
-            QUANTITY:
-         </div>
-        } */}
         <div className="flex items-center gap-4 text-sm">
             <button type="button" onClick={handleDecreaseQty} className="btnQty">-</button>
             <div>{cartItem.prodQty}</div>

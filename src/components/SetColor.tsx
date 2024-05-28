@@ -1,7 +1,6 @@
 "use client";
 import { CartItemType } from "@/app/product/ProductDetails";
 
-
 interface SetColorProps{
     prodColor: string[],
     cartItem: CartItemType,

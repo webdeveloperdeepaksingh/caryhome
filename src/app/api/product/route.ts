@@ -18,10 +18,12 @@ type ProductType = {
 
 export async function GET(req:NextRequest){
 
-  try {
+  try 
+  {
     await dbConnect();
     const prodList:ProductType[] = await Products.find();
     return NextResponse.json({ prodList, success: true }, {status:200});
+    
   } catch (error) {
     return new NextResponse("Error while fetching prodData: " + error, {status:500});
   }

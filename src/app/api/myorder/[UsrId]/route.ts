@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import Orders from "../../../../../models/Order";
 import dbConnect from "../../../../../dbConnect";
 
-export type OrderType = {
+type OrderType = {
     usrId: string,
     usrProducts:string[],
     razorpay_order_id: string,

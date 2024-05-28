@@ -1,10 +1,12 @@
 import AddRating from "../AddRating";
 import ListRating from "../ListRating";
 import ProductDetails from "../ProductDetails";
-import { IProdParams } from "@/app/dashboard/update-product/[ProdId]/page";
 import { BASE_API_URL } from "../../../../utils/constant";
 import Footer from "@/components/footer/Footer";
  
+interface IProdParams {
+    ProdId?: string;
+}
 
 async function getProductById(id:IProdParams){
     

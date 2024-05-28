@@ -2,13 +2,11 @@
 import { CartItemType } from "@/app/product/ProductDetails";
 import { useState } from "react";
 import Image from "next/image";
-
 interface ProductImageProps {
     cartItem:CartItemType,
     prodById: any,
     handleSelectColor: (col: string) => void;
 }
-
 
 const ProductImage: React.FC<ProductImageProps> = ({prodById, cartItem, handleSelectColor}) => {
 
