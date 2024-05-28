@@ -1,14 +1,25 @@
 "use client";
-import React, { Suspense } from 'react';
+import React, {useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import Loading from './Loading';
-import { useSearchParams } from 'next/navigation';
 
 const Success = () => {
     
-    const searchParams = useSearchParams();
-    const paymentid = searchParams.get('paymentid');
+    const [isLoading, setIsLoading] = useState<boolean>(true);  
+    const [paymentId, setPaymentId] = useState<string | null>(null); 
+
+    useEffect(()=>{
+      if (typeof window !== 'undefined' && window.location) {
+          const searchParamsString = window.location.search;
+          const searchParams = new URLSearchParams(searchParamsString);
+          const pymtId = searchParams.get('paymentId');
+          setPaymentId(pymtId);
+          setIsLoading(false);
+      } else {
+         console.error("window.location is not available in this environment.");
+      }
+    },[])
 
     const loggedInUser = {
         result:
@@ -18,12 +29,18 @@ const Success = () => {
         }
     };
 
+    if(isLoading){
+      return <div>
+        <Loading/>
+      </div>
+    }
+
   return (
     <div>
         <div className="flex flex-col gap-3 h-screen items-center justify-center">
             <div className="flex flex-col items-center gap-2 border-[1.5px] border-x-indigo-800 rounded-md shadow-lg p-4">
                 <div className="font-bold">Payment successful!</div>
-                <span className="block sm:inline">Your paymentID= {paymentid} has been processed.</span>       
+                <span className="block sm:inline">Your paymentID= {paymentId} has been processed.</span>       
             </div>
             <Link href={`/dashboard/myorders/${loggedInUser.result._id}`} className='btnRight'>
                     View Your Orders
@@ -32,13 +49,6 @@ const Success = () => {
     </div>
   )
 }
-
 export default Success;
 
-export const PaymentSuccess = () => {
-    return (
-      <Suspense fallback={<div><Loading /></div>}>
-        <Success />
-      </Suspense>
-    );
-  }
+

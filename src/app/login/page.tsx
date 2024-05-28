@@ -1,14 +1,14 @@
 "use client";
 import { NextPage } from "next";
 import { BASE_API_URL } from "../../../utils/constant";
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { AiOutlineGoogle } from "react-icons/ai";
 import Cookies from 'js-cookie';
 import Container from "@/components/Container";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { Suspense, useState } from "react";
+import { useEffect, useState } from "react";
+
  
 interface LoginType {
     usrName: string;
@@ -17,11 +17,21 @@ interface LoginType {
 
 const LoginPage : NextPage = () => {
 
-    const urlSearchParams = useSearchParams();    
-    const navigate = urlSearchParams.get('navigate');
     const router = useRouter();
+    const [navigate, setNavigate] = useState<string | null>(null); 
     const [errorMessage, setErrorMessage] = useState('');
     const [user, setUser] = useState<LoginType>({usrName:'', usrPass:''});
+
+    useEffect(()=>{
+      if (typeof window !== 'undefined' && window.location) {
+          const searchParamsString = window.location.search;
+          const searchParams = new URLSearchParams(searchParamsString);
+          const navUrl = searchParams.get('navigate');
+          setNavigate(navUrl);
+      } else {
+         console.error("window.location is not available in this environment.");
+      }
+    },[])
 
     const handleChange = (e:any) => {
         const name = e.target.name;
