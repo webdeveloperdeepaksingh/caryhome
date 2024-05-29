@@ -92,9 +92,6 @@ const MyOrders : NextPage <IUserParams> =  ({ params }) => {
                         placeholder='Search order/payment id...'
                     /> 
                 </div>
-                <div>
-                    <Link href='/dashboard/category' className='py-3 px-3 rounded-sm bg-indigo-800 hover:bg-indigo-600 text-white font-bold'>ADD</Link>
-                </div>
             </div>
             <table className="table-auto w-full text-left">
                 <thead className='font-bold bg-gray-200'>
