@@ -356,7 +356,7 @@ const UpdateProduct : NextPage <IProdParams> = ({params}) => {
                                 return (    
                                     <div key={index} className="relative p-4 border-[1.5px] border-gray-500 rounded-md">
                                         <Image alt="prodImage" src={item} width={250} height={250}/>
-                                        {item.prodImage ? (<button type="button" className="absolute btnRemove" onClick={()=>handleRemoveImage(item)}>Remove</button>) : (null)}
+                                        {item ? (<button type="button" className="absolute btnRemove" onClick={()=>handleRemoveImage(item)}>Remove</button>) : (null)}
                                     </div>
                                 )
                             })
