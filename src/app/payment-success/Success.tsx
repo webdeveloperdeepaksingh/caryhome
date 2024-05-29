@@ -13,7 +13,7 @@ const Success = () => {
       if (typeof window !== 'undefined' && window.location) {
           const searchParamsString = window.location.search;
           const searchParams = new URLSearchParams(searchParamsString);
-          const pymtId = searchParams.get('paymentId');
+          const pymtId = searchParams.get('paymentid');
           setPaymentId(pymtId);
           setIsLoading(false);
       } else {
