@@ -20,7 +20,7 @@ interface OrderType  {
     orderAmount:string
 }
 
-const MyOrders : NextPage <IUserParams> = async ({ params }) => {
+const MyOrders : NextPage <IUserParams> =  ({ params }) => {
 
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [data, setData] = useState<OrderType[] | null>([]);

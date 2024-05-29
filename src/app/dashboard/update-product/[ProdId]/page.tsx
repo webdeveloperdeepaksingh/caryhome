@@ -352,9 +352,9 @@ const UpdateProduct : NextPage <IProdParams> = ({params}) => {
                     </div>
                     <div className="flex gap-3 my-3">
                         {
-                            imgUrl.map((item:any, index:any)=>{
-                                return (
-                                    <div key={index} className="p-4 border-[1.5px] border-gray-500 rounded-md">
+                            data.prodImage?.map((item:any, index:any)=>{
+                                return (    
+                                    <div key={index} className="relative p-4 border-[1.5px] border-gray-500 rounded-md">
                                         <Image alt="prodImage" src={item} width={250} height={250}/>
                                         {item.prodImage ? (<button type="button" className="absolute btnRemove" onClick={()=>handleRemoveImage(item)}>Remove</button>) : (null)}
                                     </div>
