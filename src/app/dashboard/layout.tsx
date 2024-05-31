@@ -8,13 +8,16 @@ import SideBar from "@/components/SideBar";
 const CommonInnerlayout: React.FC<CommonInnerlayoutProps> = ({children}) => {
 
     return (
-      <div className="flex w-auto">
-        <div className="max-w-[250px]">
+      <div className="relative flex w-auto">
+        <div className="hidden max-w-[250px] md:block">
           <SideBar/>
         </div>
         <main className="w-full h-[650px] p-5 overflow-auto">
             {children}
         </main>     
+        <div className="absolute bottom-0 w-full md:hidden">
+          <SideBar/>
+        </div>
        </div>
     )
   }

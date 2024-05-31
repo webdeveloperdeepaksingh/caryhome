@@ -5,6 +5,7 @@ import { BASE_API_URL } from "../../../../../utils/constant";
 import Link from "next/link";
 import { formatPrice } from "../../../../../utils/formatPrice";
 import Loading from "./Loading";
+import { useRouter } from "next/navigation";
  
 interface IUserParams {
     params : {
@@ -22,6 +23,7 @@ interface OrderType  {
 
 const MyOrders : NextPage <IUserParams> =  ({ params }) => {
 
+    const router =  useRouter();
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [data, setData] = useState<OrderType[] | null>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -116,9 +118,9 @@ const MyOrders : NextPage <IUserParams> =  ({ params }) => {
                                 <td className='py-2 px-4'>paid</td>
                                 <td className='py-2 px-4'>delivered</td>
                                 <td className='py-2 px-4'>
-                                    <span className="text-xs p-2 border-[1.5px] text-indigo-800 border-indigo-800 font-bold shadow-lg rounded-md">
-                                        INVOICE
-                                    </span>
+                                    <button type='button' onClick={()=>router.push(`/dashboard/receipt/${item._id}`)} className="text-xs p-2 border-[1.5px] text-indigo-800 border-indigo-800 font-bold shadow-lg rounded-md">
+                                        RECEIPT
+                                    </button>
                                 </td>
                             </tr>
                             )
@@ -133,9 +135,9 @@ const MyOrders : NextPage <IUserParams> =  ({ params }) => {
                                 <td className='py-2 px-4'>paid</td>
                                 <td className='py-2 px-4'>delivered</td>
                                 <td className='py-2 px-4'>
-                                    <span className="text-xs p-2 border-[1.5px] text-indigo-800 border-indigo-800 font-bold shadow-lg rounded-md">
-                                        INVOICE
-                                    </span>
+                                    <button type='button' onClick={()=>router.push(`/dashboard/receipt/${item._id}`)} className="text-xs p-2 border-[1.5px] text-indigo-800 border-indigo-800 font-bold shadow-lg rounded-md">
+                                        RECEIPT
+                                    </button>
                                 </td>
                             </tr>
                         )

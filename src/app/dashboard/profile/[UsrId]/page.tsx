@@ -6,8 +6,7 @@ import { BASE_API_URL } from "../../../../../utils/constant";
 import { FormEvent, useEffect, useState } from "react";
 import Loading from "./Loading";
 import { NextPage } from "next";
-import { profile } from "console";
-
+ 
 interface IUserProfileParams {
     params: {
         UsrId?: string;
@@ -21,6 +20,7 @@ interface ProfileType  {
 const UserProfile : NextPage <IUserProfileParams> = ({params}) => {
 
     const router = useRouter();
+    const [imgUrl, setImgUrl] = useState<string> ('');
     const [image, setImage] = useState<File | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [data, setData] = useState<ProfileType>({usrImage:'', usrAddress:''});
@@ -37,6 +37,7 @@ const UserProfile : NextPage <IUserProfileParams> = ({params}) => {
             
             const proData = await res.json();
             setData(proData.profileData);
+            setImgUrl(proData.profileData.usrImage);
         } catch (error) {
             console.error("Error fetching data:", error);
         }finally{
@@ -79,8 +80,8 @@ const UserProfile : NextPage <IUserProfileParams> = ({params}) => {
         })
         .then((res) => res.json())
         .then((formData) => {
-            data.usrImage = formData.secure_url;
             if(formData.secure_url){
+                setImgUrl(formData.secure_url);
                 toast.success('Image uploaded successfully!');
             }
             else{
@@ -101,7 +102,7 @@ const UserProfile : NextPage <IUserProfileParams> = ({params}) => {
             method: 'PUT',
             body: JSON.stringify(
                 { 
-                    usrImage: data.usrImage, 
+                    usrImage: imgUrl, 
                     usrAddress: data.usrAddress, 
                 }
             ),
@@ -142,9 +143,9 @@ const UserProfile : NextPage <IUserProfileParams> = ({params}) => {
             if(result.success === false){
                 toast.error(`${result.msg}`);
             }else{
-                toast.success(`${result.msg}`);
+                setImgUrl('');
                 data.usrImage = '';
-                router.refresh();
+                toast.success(`${result.msg}`);
             }      
         } catch (error) {
             console.error('Error deleting image:', error);
@@ -166,14 +167,12 @@ const UserProfile : NextPage <IUserProfileParams> = ({params}) => {
                 </div>
                 <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-2 gap-9">
-                        <div className="relative">
-                            <div className="w-auto border-[1.5px] border-gray-300 rounded-md">
-                                <Image alt="profile" src={data.usrImage} width={568} height={350}/>
-                            </div>
+                        <div className="relative w-auto border-[1.5px] border-gray-300 rounded-md">
+                            <Image alt="profile" src={imgUrl ? imgUrl : data.usrImage} width={568} height={350}/>
                             <button 
                                 type="button" 
                                 className="btnRemove absolute bottom-[-8px] right-2"
-                                onClick={()=>handleRemoveImage(data.usrImage)}
+                                onClick={()=>handleRemoveImage(imgUrl)}
                             >
                                 REMOVE
                             </button>

@@ -4,8 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { AiOutlineGoogle } from "react-icons/ai";
- 
+  
 interface SignUpType  {
     usrName:string, 
     usrEmail:string, 
@@ -105,9 +104,6 @@ const SignUp : React.FC  = () => {
                       <input type="password" className="inputBox" name="confPass" value={data.confPass} onChange={handleChange} placeholder="min-8 alphaNum char."></input>
                   </div>
                 </div>
-                <button type="button"  className="btnRight flex gap-2 items-center w-full justify-center">
-                    <AiOutlineGoogle size={24}/>Continue with Google
-                </button>
                 {errorMessage && <p className='text-red-600 italic '>{errorMessage}</p>}
                 <button type="submit" className="btnLeft w-full" >
                     Sign Up

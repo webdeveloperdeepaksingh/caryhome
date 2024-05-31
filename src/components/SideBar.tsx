@@ -79,12 +79,12 @@ const SideBar : React.FC = () => {
     
     return ( 
         <div>
-            <div className="flex bg-indigo-800 h-screen p-6">
+            <div className="flex bg-indigo-800 w-full md:h-screen p-6">
                 <div className="flex flex-col">
                     {
                         loggedInUser.result.usrRole === "Admin" ? 
                         (
-                            <div>
+                            <div className="flex w-full gap-4 md:gap-2 md:flex-col">
                                 {
                                     adminMenu.map((item:any)=>{
                                         return (

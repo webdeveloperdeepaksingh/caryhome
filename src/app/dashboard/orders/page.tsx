@@ -4,8 +4,10 @@ import { BASE_API_URL } from "../../../../utils/constant";
 import { formatPrice } from "../../../../utils/formatPrice";
 import Loading from "./Loading";
 import { NextPage } from "next";
+import { useRouter } from "next/navigation";
  
 interface OrderType  {
+    _id: string;
     usrId: string,
     usrProducts:string[],
     razorpay_order_id: string,
@@ -15,6 +17,7 @@ interface OrderType  {
 
 const Orders : NextPage = () => {
 
+    const router =  useRouter();
     const [data, setData] = useState<OrderType[] | null>();
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -111,9 +114,9 @@ const Orders : NextPage = () => {
                                 <td className='py-2 px-4'>paid</td>
                                 <td className='py-2 px-4'>{item?.deliveryStatus}</td>
                                 <td className='py-2 px-4'>
-                                    <span className="text-xs p-2 border-[1.5px] text-indigo-800 border-indigo-800 font-bold shadow-lg rounded-md">
+                                    <button type='button' onClick={()=>router.push(`/dashboard/receipt/${item._id}`)} className="text-xs p-2 border-[1.5px] text-indigo-800 border-indigo-800 font-bold shadow-lg rounded-md">
                                         RECEIPT
-                                    </span>
+                                    </button>
                                 </td>
                             </tr>
                             )

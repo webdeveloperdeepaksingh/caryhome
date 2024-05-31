@@ -6,7 +6,7 @@ import Footer from '@/components/footer/Footer';
 export const metadata: Metadata = {
   title: 'Carry Home | Electronic Online Shop',
   openGraph: {
-    images: "https://res.cloudinary.com/dlnjktcii/image/upload/v1716801346/ra2qf4rg2g8oydvxkhex.png" // Helps sharing of webpages on social media.
+    images: "https://res.cloudinary.com/dlnjktcii/image/upload/v1716991914/yvjgw9sdeniui6djeayo.png" // Helps sharing of webpages on social media.
   },
 }
 

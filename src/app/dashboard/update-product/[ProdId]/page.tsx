@@ -92,6 +92,9 @@ const UpdateProduct : NextPage <IProdParams> = ({params}) => {
             
             const prodData = await res.json();
             setData(prodData.productById);
+            setImgUrl(prodData.productById.prodImage);
+            setColor(prodData.productById.prodColor);
+            setInStock(prodData.productById.inStock);
         } catch (error) {
             console.error("Error fetching data:", error);
         }finally{
@@ -120,46 +123,48 @@ const UpdateProduct : NextPage <IProdParams> = ({params}) => {
         }        
     }
 
-    const handleImageUpload = async (e:any) => {
+    const handleImageUpload = async (e: any) => {
         e.preventDefault();
-      
-        if (image === null || image.length === 0) {
+    
+        if (!image || image.length === 0) {
             alert('No image selected.');
             return;
         }
-
-        let imageUrl:string[]=[];
-        try
-        {
-            image?.forEach(async (element) => {
+    
+        try {
+            const imageUrlPromises = image.map(async (element) => {
                 if (typeof element.type === 'string' && !element.type.startsWith('image/')) {
-                        alert('Only image files (JPEG, JPG, PNG ) are allowed.');
-                    } else if (element.size > 100000) { //in bytes
-                        alert('Image size exceeds 100KB max limit.');
-                    }
-                
-                    const formData = new FormData();
-                    formData.append('file', element);
-                    formData.append('upload_preset', 'carryhome_images');
-                    formData.append('cloud_name', 'dlnjktcii');
-
-                        const response = await fetch('https://api.cloudinary.com/v1_1/dlnjktcii/image/upload', {
-                            method: 'PUT',
-                            body: formData
-                        });
-                        const formDataResult = await response.json();
-                        imageUrl.push(formDataResult.secure_url); 
-                });  
-                
-                setImgUrl(imageUrl);
-                data.prodImage=imageUrl;
-                toast.success('Image uploaded successfully!');
-        }
-        catch (error) {
-            console.error("Error uploading image: ", error);
+                    alert('Only image files (JPEG, JPG, PNG) are allowed.');
+                    return null;
+                } else if (element.size > 100000) { // in bytes
+                    alert('Image size exceeds 100KB max limit.');
+                    return null;
+                }
+    
+                const formData = new FormData();
+                formData.append('file', element);
+                formData.append('upload_preset', 'carryhome_images');
+                formData.append('cloud_name', 'dlnjktcii');
+    
+                const response = await fetch('https://api.cloudinary.com/v1_1/dlnjktcii/image/upload', {
+                    method: 'PUT',
+                    body: formData
+                });
+    
+                const formDataResult = await response.json();
+                return formDataResult.secure_url;
+            });
+    
+            const uploadedImageUrls = await Promise.all(imageUrlPromises);
+            const updatedUrls = [...imgUrl, ...uploadedImageUrls].filter((url) => url !== null);   
+            setImgUrl(updatedUrls);
+            toast.success('Image uploaded successfully!');
+            
+        } catch (error) {
+            console.error('Error uploading image:', error);
             toast.error('Image uploading failed!');
         }
-    }
+    };    
 
      async function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
         if (!event.target.files || event.target.files.length === 0) {
@@ -209,7 +214,7 @@ const UpdateProduct : NextPage <IProdParams> = ({params}) => {
                         prodPrice:data.prodPrice,
                         prodColor:color,
                         prodDesc:data.prodDesc,
-                        prodImage:data.prodImage
+                        prodImage:imgUrl
                     }
                 ),
             });
@@ -218,9 +223,9 @@ const UpdateProduct : NextPage <IProdParams> = ({params}) => {
             console.log(post);
         
             if (post.success === false) {
-                toast.error('Product creation failed!');
+                toast.error('Product updation failed!');
             } else {
-                toast.success('Product created successfully!');
+                toast.success('Product updated successfully!');
                 setData(
                     { 
                         ...data, 
@@ -234,44 +239,47 @@ const UpdateProduct : NextPage <IProdParams> = ({params}) => {
                         prodImage:[] 
                     }
                 ); //clear the prev input data.
-                router.push('/dashboard/products');
              }
+             router.refresh();
         } catch (error) {
-            toast.error('Product creation failed.');
+            toast.error('Product updation failed.');
         } 
     }
 
-    const handleRemoveImage = async (imageUrl:any) => {   
-    if(imageUrl){
-            const parts = imageUrl.split('/'); // Split the URL by slashes ('/')
-            const filename = parts.pop();  //and get the last part
-        try 
-        {
-            const public_id = filename.split('.')[0]; // Split the filename by periods ('.') and get the first part
-            const response = await fetch(`${BASE_API_URL}/api/removeimagefiles`, 
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ public_id }), // Send the file name to delete
-            });
-
-            const result = await response.json();
-            
-            if(result.success === false){
-                toast.error(`${result.msg}`);
-            }else{
-                toast.success(`${result.msg}`);
-                // data.prodImage?.map((item:any)=>{
-                    
-                // })
-            }      
-        } catch (error) {
-            console.error('Error deleting image:', error);
-        }
+    const handleRemoveImage = async (imageUrl: string) => {
+        if (imageUrl) {
+            try {
+                const parts = imageUrl.split('/'); // Split the URL by slashes ('/')
+                const filename = parts.pop(); // Get the last part (filename)
+                const public_id = filename?.split('.')[0]; // Split the filename by periods ('.') and get the first part
+    
+                if (!public_id) {
+                    console.error('Invalid image URL:', imageUrl);
+                    return;
+                }
+    
+                const response = await fetch(`${BASE_API_URL}/api/removeimagefiles`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ public_id }), // Send the file name to delete
+                });
+    
+                const result = await response.json();
+    
+                if (result.success === false) {
+                    toast.error(`${result.msg}`);
+                } else {
+                    setImgUrl((prevUrls) => prevUrls.filter((url) => url !== imageUrl));
+                    toast.success(`${result.msg}`);
+                }
+            } catch (error) {
+                console.error('Error deleting image:', error);
+            }
         }
     };
+    
 
     if(isLoading){
         return<div>
@@ -333,34 +341,53 @@ const UpdateProduct : NextPage <IProdParams> = ({params}) => {
                         <label className="font-semibold">Color:</label>
                         <div className="grid grid-cols-4 inputBox">
                             <div className="flex items-center gap-2">
-                                <Checkbox onClick={()=>handleSetColor('bg-red-600')}/>
+                                <Checkbox 
+                                    checked={color?.includes('bg-red-600') || false}
+                                    onChange = {()=>handleSetColor('bg-red-600')}
+                                />
                                 <div className="h-[20px] w-full bg-red-600 rounded-sm"></div>
                             </div>
                             <div className="flex items-center gap-2">
-                                <Checkbox onClick={()=>handleSetColor('bg-indigo-800')}/>
+                                <Checkbox 
+                                    checked={color?.includes('bg-indigo-800') || false}
+                                    onChange={()=>handleSetColor('bg-indigo-800')}
+                                />
                                 <div className="h-[20px] w-full bg-indigo-800 rounded-sm"></div>
                             </div>
                             <div className="flex items-center gap-2">
-                                <Checkbox onClick={()=>handleSetColor('bg-gray-300')}/>
+                                <Checkbox 
+                                    checked={color?.includes('bg-gray-300') || false}
+                                    onChange={()=>handleSetColor('bg-gray-300')}
+                                />
                                 <div className="h-[20px] w-full bg-gray-300 rounded-sm"></div>
                             </div>
                             <div className="flex items-center gap-2">
-                                <Checkbox onClick={()=>handleSetColor('bg-black')}/>
+                                <Checkbox 
+                                    checked={color?.includes('bg-black') || false}
+                                    onChange={()=>handleSetColor('bg-black')}/>
                                 <div className="h-[20px] w-full bg-black rounded-sm"></div>
                             </div>
                         </div>
                     </div>
                     <div className="flex gap-3 my-3">
                         {
-                            data.prodImage?.map((item:any, index:any)=>{
+                            imgUrl.map((item:any, index:any)=>{
                                 return (    
                                     <div key={index} className="relative p-4 border-[1.5px] border-gray-500 rounded-md">
                                         <Image alt="prodImage" src={item} width={250} height={250}/>
-                                        {item ? (<button type="button" className="absolute btnRemove" onClick={()=>handleRemoveImage(item)}>Remove</button>) : (null)}
+                                        {item && (
+                                            <button 
+                                                type="button" 
+                                                className="absolute btnRemove" 
+                                                onClick={()=>handleRemoveImage(item)}
+                                            >
+                                                Remove
+                                            </button>)
+                                        }
                                     </div>
                                 )
                             })
-                        }
+                        }                       
                     </div>
                     <div className="flex flex-col gap-2">
                         <label className="font-semibold">Image: [Size:350*350]</label>
@@ -370,7 +397,11 @@ const UpdateProduct : NextPage <IProdParams> = ({params}) => {
                         </div>
                     </div>
                     <div className="flex items-center inputBox p-4 max-w-[140px]">  
-                        <Checkbox name="inStock" onClick={handleInStock}/>
+                        <Checkbox 
+                            name="inStock" 
+                            checked={inStock}
+                            onChange={handleInStock}
+                        />
                         <label className="font-semibold">inStock?</label>
                     </div>
                     {errorMessage && <p className='text-red-600 italic '>{errorMessage}</p>}

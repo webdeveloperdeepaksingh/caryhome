@@ -2,7 +2,6 @@
 import { NextPage } from "next";
 import { BASE_API_URL } from "../../../utils/constant";
 import { useRouter } from "next/navigation";
-import { AiOutlineGoogle } from "react-icons/ai";
 import Cookies from 'js-cookie';
 import Container from "@/components/Container";
 import Link from "next/link";
@@ -96,39 +95,36 @@ const LoginPage : NextPage = () => {
         <div>
             <Container>
                 <title>LOGIN</title>
-                <div className="flex mx-auto h-screen items-center justify-center">
-                    <div className="flex w-auto p-6 md:p-0">
-                        <form className="flex flex-col max-w-[650px] p-9 gap-3 border-[1.5px] border-indigo-800 shadow-lg rounded-md" onSubmit={handleSubmit}>
-                            <div className="flex flex-col">
-                                <label htmlFor="usrName" className="text-sm mb-2">Username or Email:*</label>
-                                <input type="text" className="inputBox" name="usrName" value={user.usrName} onChange={handleChange} placeholder="coachdeepak@gmail.com"></input>
-                            </div>
-                            <div className="flex flex-col">
-                                <label htmlFor="passWord" className="text-sm mb-2">Password:*</label>
-                                <input type="password" className="inputBox" name="usrPass" value={user.usrPass} onChange={handleChange} placeholder="password"></input>
-                            </div>
-                            <button type="button"  className="btnRight flex gap-2 items-center w-full justify-center">
-                                <AiOutlineGoogle size={24}/>Continue with Google
-                            </button>
-                            {errorMessage && <p className='text-red-600 italic '>{errorMessage}</p>}
-                            <button type="submit" className="btnLeft w-full" >
-                                Login
-                            </button>
-                            <div className="flex flex-col items-center">
-                            <div className="flex gap-2 items-center">
-                                <p className="text-sm">Dont have an account?</p> 
-                                <Link href="/register" className="text-sm">
-                                    Register
-                                </Link>
-                            </div>
-                            <div className="text-sm"> 
-                                <Link href="/forgot-password">
-                                    Forgot password?
-                                </Link>
-                            </div>
-                            </div>
-                        </form>
-                    </div>
+                <div>
+                  <div className="flex max-w-[400px] p-6 mx-auto h-screen items-center justify-center">
+                      <form className="flex flex-col w-full p-9 gap-3 border-[1.5px] border-indigo-800 shadow-lg rounded-md" onSubmit={handleSubmit}>
+                          <div className="flex flex-col">
+                              <label htmlFor="usrName" className="text-sm mb-2">Username or Email:*</label>
+                              <input type="text" className="inputBox" name="usrName" value={user.usrName} onChange={handleChange} placeholder="coachdeepak@gmail.com"></input>
+                          </div>
+                          <div className="flex flex-col">
+                              <label htmlFor="passWord" className="text-sm mb-2">Password:*</label>
+                              <input type="password" className="inputBox" name="usrPass" value={user.usrPass} onChange={handleChange} placeholder="password"></input>
+                          </div>
+                          {errorMessage && <p className='text-red-600 italic '>{errorMessage}</p>}
+                          <button type="submit" className="btnLeft w-full" >
+                              Login
+                          </button>
+                          <div className="flex flex-col items-center">
+                          <div className="flex gap-2 items-center">
+                              <p className="text-sm">Dont have an account?</p> 
+                              <Link href="/register" className="text-sm">
+                                  Register
+                              </Link>
+                          </div>
+                          <div className="text-sm"> 
+                              <Link href="/forgot-password">
+                                  Forgot password?
+                              </Link>
+                          </div>
+                          </div>
+                      </form>
+                  </div>
                 </div>
             </Container>
         </div>
