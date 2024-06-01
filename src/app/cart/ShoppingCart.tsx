@@ -30,18 +30,6 @@ const ShoppingCart : React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const cartItems = useSelector((store:StoreType) => store.cart);
 
-    useEffect(()=>{
-        if(cartItems.items.length >= 0){
-         setIsLoading(false);
-       }
-     },[cartItems.items])
- 
-     if(isLoading){
-       return <div>
-           <Loading/>
-       </div>
-     }
-
     const loggedInUser = {
         result:
         {
@@ -50,9 +38,15 @@ const ShoppingCart : React.FC = () => {
         }
     };
 
+    useEffect(()=>{
+    if(cartItems.items.length >= 0){
+         setIsLoading(false);
+       }
+    },[cartItems.items])
+
     const subTotal : number = cartItems.totalPrice;
     const tax : number= .06 * subTotal;
-    const shippingCharge : number= 370;
+    const shippingCharge : number = 370;
     
     const handlePlusQty = (product:CartItemType) => {
         dispatch(handlePlusCartQty(product));
@@ -76,7 +70,13 @@ const ShoppingCart : React.FC = () => {
         return<div>
             <EmptyCart/>
         </div>
-     }
+    }
+
+    if(isLoading){
+        return <div>
+            <Loading/>
+        </div>
+    }
 
     return ( 
         <div className="flex flex-col">     
@@ -94,12 +94,12 @@ const ShoppingCart : React.FC = () => {
                     cartItems?.items.map((item:any)=>{
                         return(
                             <div key={item._id} className="grid grid-cols-5 text-xs md:text-sm gap-2 border-t-[1.5px] border-indigo-800 py-4 items-center">
-                                <div className="col-span-2 justify-self-start flex gap-2" >
-                                    <Link href={`/product/${item._id}`}>
-                                        <Image alt={item.prodName} src={item.prodImage[0]} width={50} height={30}/>
-                                    </Link>
+                                <div className="flex col-span-2 justify-self-start  gap-2" >                   
+                                    <Image alt={item.prodName} src={item.prodImage[0]} width={50} height={30}/>                
                                     <div className="flex flex-col gap-2">
-                                        <p>{truncateText(item.prodName)}</p>
+                                        <Link href={`/product/${item.prodId}`}>
+                                            {truncateText(item.prodName)}
+                                        </Link>
                                         <div className="flex gap-1 w-auto">
                                             <button type="button" className="btnRemove w-[70px]" onClick={()=> handleRemove(item)}>Remove</button>
                                             {

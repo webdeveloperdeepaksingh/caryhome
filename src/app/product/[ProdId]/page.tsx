@@ -29,6 +29,7 @@ const ProductLandingPage = async ({params}: {params:IProdParams}) => {
     if(!BASE_API_URL){
         return null;
     }
+    
     const prodById = await getProductById(params);
 
     return ( 

@@ -24,7 +24,7 @@ const ProductImage: React.FC<ProductImageProps> = ({prodById}) => {
                         imageList?.map((img:any)=>{
                             return(
                                 <div 
-                                    key={img.prodImage} 
+                                    key={img} 
                                     className={`${img === selectImage ? "border-2 border-indigo-800 rounded-md p-3 cursor-pointer" : "border-[1.5px] rounded-md p-3 border-gray-300 cursor-pointer"}`} 
                                     onClick={()=>handleSelectImage(img)}
                                 >
